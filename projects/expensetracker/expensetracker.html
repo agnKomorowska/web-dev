@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" class="style">
+    <link href="script.js" class="script">
+</head>
+<body>
+    <section id="section-intro">
+        <br>
+        <div id="div-intro-box" class="box">
+            <h2>Expense Tracker</h2>
+        </div>
+    </section>
+    <section id="section-add">
+        <h3>Add expense</h3>
+        <div id="div-add-box" class="box">
+            <form id="form-add">
+                <label for="add-name">Name: </label>
+                <input type="text" name="add-name" id="add-name" required>
+                <label for="add-amount">Price: </label>
+                <input type="number" name="add-amount" id="add-amount" required>
+                <label for="add-payment-method">Payment Method: </label>
+                <select name="add-payment-method" id="add-payment-method">
+                    <option value="" disabled selected>select</option>
+                    <option value="cash">Cash</option>
+                    <option value="debit-card">Debit card</option>
+                    <option value="credit-card">Credit card</option>
+                    <option value="transfer">Bank transfer</option>
+                </select>
+                <label for="add-currency">Currency: </label>
+                <select name="add-currency" id="add-currency">
+                    <option value="" disabled selected>select</option>
+                    <option value="PLN">PLN</option>
+                    <option value="BGP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                </select>
+                <label for="add-category">Category: </label>
+                <select name="add-category" id="add-category" aria-placeholder="select">
+                    <option value="" disabled selected>select</option>
+                    <option value="housing">Housing</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="dining-out">Dining Out</option>
+                    <option value="personal-care">Personal Care</option>
+                    <option value="transport">Transportation</option>
+                    <option value="health-care">Health Care</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="child-care">Child Care</option>
+                    <option value="pet-care">Pet Care</option>
+                    <option value="misc">Miscellaneous</option>
+                </select>
+                <label for="add-amount">Amount: </label>
+                <input type="number" name="add-amount" id="add-amount" value="1">
+                <label for="add-notes">Notes: </label>
+                <input type="text" name="add-notes" id="add-notes">
+                <label for="add-date">Date: </label>
+                <input type="date" name="add-date" id="add-date">
+                <div class="empty"></div>
+                <button id="button-add" type="submit">Add expense</button>
+            </form>
+            
+        </div>
+    </section>
+    <section id="search-section"></section>
+    <h3>Search & Filter</h3>
+        <div id="div-search-box" class="box">
+            <form id="form-search">
+                <label for="search-name">Search: </label>
+                <input id="search-name">
+                <button id="button-search" type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+    <br>
+    <section id="filter-section">
+        <div id="div-filter-box" class="box">
+            <form action="javascript:;" onsubmit="myFunction(this);" id="form-filter">
+                <label for="filter-name">Filter by Price from: </label>
+                <input type="number" name="filter-name" id="filter-name">
+                <label for="filter-price-to">Price to: </label>
+                <input type="number" name="filter-price-to" id="filter-price-to">
+                <label for="filter-payment-method">Payment Method: </label>
+                <select name="filter-payment-method" id="filter-payment-method">
+                    <option value="" disabled selected>select</option>
+                    <option value="cash">Cash</option>
+                    <option value="debit-card">Debit card</option>
+                    <option value="credit-card">Credit card</option>
+                    <option value="transfer">Bank transfer</option>
+                </select>
+                <label for="filter">Currency: </label>
+                <select name="filter-category" id="filter-category">
+                    <option value="" disabled selected>select</option>
+                    <option value="PLN">PLN</option>
+                    <option value="BGP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                </select>
+                <label for="filter-amount">Amount: </label>
+                <input type="number" name="filter-amount" id="filter-amount">
+                <label for="filter-category">Category: </label>
+                <select name="filter-category" id="filter-category">
+                    <option value="" disabled selected>select</option>
+                    <option value="housing">Housing</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="dining-out">Dining Out</option>
+                    <option value="personal-care">Personal Care</option>
+                    <option value="transport">Transportation</option>
+                    <option value="health-care">Health Care</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="child-care">Child Care</option>
+                    <option value="pet-care">Pet Care</option>
+                    <option value="misc">Miscellaneous</option>
+                </select>
+                <label for="filter-date-from">Date from: </label>
+                <input type="date" name="filter-date-from" id="filter-date-from">
+                <label for="filter-date-to">Date to: </label>
+                <input type="date" name="filter-date-to" id="filter-date-to">
+                <div class="empty"></div>
+                <button id="button-filter" type="submit">Apply</button>
+            </form>
+        </div>
+    </section>
+    <section id="section-view">
+        <h3>Expenses</h3>
+        <div id="div-view-box" class="box">
+            <form id="form-view">
+                    <p><b>Name</b></p>
+                    <p><b>Payment Method</b></p>
+                    <p><b>Category</b></p>
+                    <p><b>Date</b></p>
+                    <p><b>Price</b></p>
+                    <p><b>Amount</b></p>
+                    <p><b>Total Price</b></p>
+                    <p></p>
+
+                    <p>Playstation</p>
+                    <p>Credit Card</p>
+                    <p>Electronics</p>
+                    <p>01/01/2022</p>
+                    <p>1000 zł</p>
+                    <p>1</p>
+                    <p>1000 zł</p>
+                    <div class="button-wrapper">
+                        <button class="button-remove" type="submit">
+                            Remove
+                        </button>
+                    </div>
+
+                    <p>Groceries at Żabka</p>
+                    <p>Debit Card</p>
+                    <p>Groceries</p>
+                    <p>02/01/2022</p>
+                    <p>80 zł</p>
+                    <p>1</p>
+                    <p>800 zł</p>
+                    <div class="button-wrapper">
+                        <button class="button-remove" type="submit">
+                            Remove
+                        </button>
+                    </div>
+
+                    <p>Bus tickets</p>
+                    <p>Cash</p>
+                    <p>Transport</p>
+                    <p>03/01/2022</p>
+                    <p>4 zł</p>
+                    <p>4</p>
+                    <p>16 zł</p>
+                    <div class="button-wrapper">
+                        <button class="button-remove" type="submit">
+                            Remove
+                        </button>
+                    </div>
+
+                    <p>Rent</p>
+                    <p>Debit Card</p>
+                    <p>Rent</p>
+                    <p>04/01/2022</p>
+                    <p>1800 zł</p>
+                    <p>1</p>
+                    <p>1800 zł</p>
+                    <div class="button-wrapper">
+                        <button class="button-remove" type="submit">
+                            Remove
+                        </button>
+                    </div>
+                    <p id="total-label"><b>Total</b></p>
+                    <p id="total-number"><b>3000 PLN<br>10 GBP</b></p></b>
+                    <p class="empty"></p>
+            </form>
+        </div>
+    </section>
+    <section>
+        <h3>Summary</h3>
+        <div id="div-summary-box" class="box">
+            <div id="div-summary">
+                <p><b>Category</b></p>
+                <p><b>Expenses in PLN</b></p>
+                <p><b>Expenses in GBP</b></p>
+                <p><b>Percentage</b></p>
+            
+                <p>Housing</p>
+                <p>3000</p>
+                <p>600</p>
+                <p></p>
+
+                <p>Groceries</p>
+                <p>1000</p>
+                <p>200</p>
+                <p>33% </p>
+
+                <p>Dining Out</p>
+                <p>1400</p>
+                <p>280</p>
+                <p>45%</p>
+
+                <p>Personal Care</p>
+                <p>600</p>
+                <p>120</p>
+                <p>22%</p>
+
+                <p>Transportation</p>
+                <p>3000</p>
+                <p>600</p>
+                <p></p>
+
+                <p>Health Care</p>
+                <p>3000</p>
+                <p>600</p>
+                <p></p>
+
+                <p>Entertainment</p>
+                <p>3000</p>
+                <p>600</p>
+                <p></p>
+
+                <p>Child Care</p>
+                <p>3000</p>
+                <p>600</p>
+                <p></p>
+
+                <p>Pet Care</p>
+                <p>3000</p>
+                <p>600</p>
+                <p>20%</p>
+
+                
+
+                <p>Miscellaneous</p>
+                <p>3000</p>
+                <p>600</p>
+                <p></p>
+            </div>
+        </div>
+    </section>
+    <br>
+</body>
+</html>

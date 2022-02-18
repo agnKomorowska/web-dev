@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .uppercase {
+            text-transform: uppercase;
+        }
+        .lowercase {
+            text-transform: lowercase;
+        }
+        .capitalize {
+            text-transform: capitalize;
+        }
+        .underline {
+            text-decoration: overline;
+            text-decoration-color: darkorange;
+            text-decoration-style: dashed;
+        }
+        .indent {
+            text-indent: -0.5em;
+        }
+        .word-spacing {
+            word-spacing: 1em;
+        }
+        .letter-spacing {
+            letter-spacing: -0.05em;
+        }
+        .shadow {
+            text-shadow: 2px 2px 4px red;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Lorem ipsum <span class="uppercase">dolor</span> sit amet consectetur.
+    </p>
+    <p>
+        Lorem ipsum <span class="lowercase underline">dolor</span> sit amet consectetur.
+    </p>
+    <p>
+        Lorem ipsum <span class="capitalize">dolor</span> sit amet consectetur.
+    </p>
+    <p class="indent word-spacing shadow">
+        Lorem ipsum <span class="capitalize">dolor</span> sit amet consectetur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates vel in perspiciatis temporibus corporis pariatur. Perferendis recusandae provident laboriosam veniam.
+    </p>
+    <p class="indent letter-spacing">
+        Lorem ipsum <span class="capitalize">dolor</span> sit amet consectetur. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Voluptates vel in perspiciatis temporibus corporis pariatur. Perferendis recusandae provident
+        laboriosam veniam.
+    </p>
+</body>
+</html>

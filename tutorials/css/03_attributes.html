@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [data-color] {
+            background-color: red;
+            border: 2px dotted darkred;
+            font-weight: bold;
+        }
+        [data-color = "blue"] {
+            background-color: lightblue;
+            border: 2px dotted darkblue;
+        }
+        [data-green = "light" i] {
+            background-color: lightgreen;
+        }
+        [data-green = "dark" i] {
+            background-color: darkgreen;
+        }
+        [class *= "str"] {
+            background-color: orange;
+        }
+        [class ~= "small-text"] {
+            font-size: 10px;
+        }
+        [class ^= "small-text"] {
+            border: 10px solid darkorange;
+        }
+        [class $= "box"] {
+            padding: 5px;
+            margin: 10px
+        }
+    </style>
+</head>
+<body>
+    <div data-color>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div><div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>
+    <div data-green="lighT">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>
+    <div class="small-text str box">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>
+    <div data-green>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>
+    <div data-color="blue">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, iste.</div>
+</body>
+</html>

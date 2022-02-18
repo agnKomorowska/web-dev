@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content:center;
+        }
+        .image-box {
+            margin: 10px;
+            padding: 5px;
+            background-color: black;
+            color: white;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        img {
+            width: 500px;
+        }
+        .image-box:hover {
+            transform: scale(1.07);
+            transition: all 1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-box">
+            <img src="https://cdn.pixabay.com/photo/2021/11/17/15/07/paris-6803796_960_720.jpg" alt="">
+            <div>Test</div>
+        </div>
+        <div class="image-box">
+            <img src="https://cdn.pixabay.com/photo/2021/08/26/15/39/cat-6576397_960_720.jpg" alt="">
+            <div>Test</div>
+        </div>
+        <div class="image-box">
+            <img src="https://cdn.pixabay.com/photo/2021/09/18/20/11/konigssee-6635951_960_720.jpg" alt="">
+            <div>Test</div>
+        </div>
+        <div class="image-box">
+            <img src="https://cdn.pixabay.com/photo/2021/11/14/21/14/animals-6795732_960_720.jpg" alt="">
+            <div>Test</div>
+        </div>
+        <div class="image-box">
+            <img src="https://cdn.pixabay.com/photo/2021/11/08/23/29/nature-6780354_960_720.jpg" alt="">
+            <div>Test</div>
+        </div>
+    </div.container>
+</body>
+</html>

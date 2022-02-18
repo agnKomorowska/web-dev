@@ -1,0 +1,122 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+.box {
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#div-intro-box {
+    background-color: lightcyan;
+}
+
+#div-add-box {
+    background-color: aquamarine;
+}
+
+#div-search-box {
+    background-color:lightgreen;
+}
+
+#div-filter-box {
+    background-color:lightsteelblue;
+}
+
+#div-view-box {
+    background-color:lightskyblue;
+}
+
+#div-summary-box {
+    background-color:lightseagreen;
+}
+#form-add {
+    display: grid;
+    grid-template-columns: 90px 130px 140px 170px;
+    row-gap: 1em;
+    white-space: nowrap;
+    justify-content: center;
+}
+
+label {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+#add-name {
+    grid-column: span 3;
+}
+
+#form-search {
+    display: grid;
+    grid-template-columns: 80px 350px 80px;
+    row-gap: 1em;
+    white-space: nowrap;
+    justify-content: center;
+}
+
+#button-search {
+    margin-left: 10px;
+}
+
+#form-filter {
+    display: grid;
+    grid-template-columns: 160px 140px 80px 140px 140px 120px ;
+    row-gap: 1em;
+    white-space: nowrap;
+    justify-content: center;
+}
+
+#total-label {
+    grid-column: span 6;
+}
+
+#form-view {
+    display: grid;
+    grid-template-columns: min-content min-content min-content min-content min-content min-content min-content min-content;
+    white-space: nowrap;
+    justify-content: center;
+    text-align: center;
+}
+
+p {
+    margin: 0px;
+    padding: 10px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    justify-content: center;
+    text-align: center;
+}
+
+.button-wrapper {
+    
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.button-remove {
+    margin: 7px;
+    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    justify-content: center;
+    text-align: center;
+}
+
+
+#div-summary {
+    display: grid;
+    grid-template-columns: min-content min-content min-content min-content ;
+    white-space: nowrap;
+    justify-content: center;
+    
+}

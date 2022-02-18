@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Form</h1>
+    <form action="login.php" method="post">
+        <fieldset>
+            <legend>Log in</legend>
+            <p>
+                <label for="input_name">Username: <input name="user_name" id="user_name" type="text" value="user" placeholder="Insert name"></label>
+            </p>
+            <p>
+                <label for="password">Password: <input name="password" id="password" type="text" minlength="8" required></label>
+            </p>
+            <button type="submit">Log in</button>
+            <button type="reset">Reset</button>
+        </fieldset>
+    </form>
+    <form action="" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Register</legend>
+            <input type="hidden" value="abc" name="hidden-value"/>
+            <p>
+                <label for="input_name">Username: <input name="user_name" id="user_name" type="text" value="user" placeholder="Insert name"></label>
+            </p>
+            <p>
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email" required/>
+            </p>
+            <p>
+                <label for="password">Password: <input name="password" id="password" type="text" minlength="8" required></label>
+            </p>
+            <p>
+                <label for="password2">Confirm password: <input name="password2" id="password2" type="text" minlength="8" required></label>
+            </p>
+            <p>
+                <label for="age">Age: </label>
+                <input type="number" name="age" id="age" min="10" max="110">
+            </p>
+            <p>
+                <label for="description">Description: </label>
+                <textarea name="description" id="description" cols=30 rows=10></textarea>
+            </p>
+            <p>
+                <label for="avatar">Avatar: </label>
+                <input type="file" name="avatar" id="avatar" accept="image/png, image/jpeg" />
+            </p>
+            <p>
+                Favourite color:
+                <label for="red">Red</label>
+                <input type="radio" name="color" value="red" id="red">
+                <label for="green">Green</label>
+                <input type="radio" name="color" value="green" id="green">
+                <label for="blue">Blue</label>
+                <input type="radio" name="color" value="blue" id="blue">
+            </p>
+            <p>
+                Favourite brand:
+                <label for="dodge">Dodge</label>
+                <input type="checkbox" name="brand" value="dodge" id="dodge">
+                <label for="pontiac">Pontiac</label>
+                <input type="checkbox" name="brand" value="pontiac" id="pontiac">
+                <label for="gmc">GMC</label>
+                <input type="checkbox" name="brand" value="gmc" id="gmc">
+            </p>
+            <p>
+                <label for="datetime">Date of purchase: </label>
+                <input type="datetime" name="datetime" id="datetime">
+            </p>
+            <p>
+                <label for="car-color">Color: </label>
+                <input type="color" name="car-color" id="car-color">
+            </p>
+            <p>
+                <label for="distance">Distance in 1k km: </label>
+                <input type="range" name="distance" id="distance" min="1" max="100" step="1">
+            </p>
+            <p>
+                <label for="url">Webpage: </label>
+                <input type="url" name="url" id="url" />
+            </p>
+            <p>
+                <label for="tel">Telephone: </label>
+                <input type="tel" name="tel" id="tel">
+            </p>
+            <p>
+                <label for="theme">Theme: </label>
+                <select name="theme" id="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </p>
+            <button type="submit">Log in</button>
+            <button type="reset">Reset</button>
+        </fieldset>
+    </form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text statistics</title>
+    <style>
+        #input-box {
+            width: 500px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="input-box"></textarea>
+    <div>
+        <div>Number of characters: <span id="num-chars"></span></div>
+        <div>Number of words: <span id="num-words"></span></div>
+        <div>Number of sentences: <span id="num-sentences"></span></div>
+    </div>
+    <script>
+        var textarea = document.getElementsByTagName("textarea")[0];
+        textarea.addEventListener("input", onChange);
+        
+        function onChange() {
+            const data = textarea.value;
+            console.log(data);
+            const numChars = data.length;
+            const numWords = textarea.value.split(" ").length - 1;
+            const numSentences = textarea.value.split(".").length - 1;
+
+            document.getElementById("num-chars").innerHTML = numChars;
+            document.getElementById("num-words").innerHTML = numWords;
+            document.getElementById("num-sentences").innerHTML = numSentences;
+
+            var str = "abcdefgh";
+            str.slice()
+        }
+        
+    </script>
+</body>
+</html>

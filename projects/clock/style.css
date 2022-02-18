@@ -1,0 +1,35 @@
+body {
+    background-color: darkolivegreen;
+    margin: 0px;
+    padding: 0px;
+    color: beige;
+    text-align: center;
+    display: block;
+}
+
+#time {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+h2 {
+    
+    font-size: 2rem;
+}
+
+#switch-button {
+    font-size: 1.2rem;
+    background-color: beige;
+    color: darkolivegreen;
+    margin: 0 auto;
+    width: fit-content;
+    line-height: 50%;
+    padding: 8px;;
+    border-radius: 5px;
+}
+
+#switch-button:hover {
+    background-color:khaki;
+    cursor: pointer;
+}
+

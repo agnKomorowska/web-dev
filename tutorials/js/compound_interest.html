@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style></style>
+</head>
+<body>
+w
+        <div>
+            <label for="principal">Principal (in PLN): </label>
+            <input id="principal" type="number" value="1000"></input>
+        </div>
+        <div>
+            <label for="rate">Interest rate: </label>
+            <input id="rate" type="text" value="0.04"></input>
+        </div>
+        <div>
+            <label for="number-of-times">Number of times interest is compounded in a year: </label>
+            <input id="number-of-times" type="number" value="12"></input>
+        </div>
+        <div>
+            <label for="time">Time (in years): </label>
+            <input id="time" type="number" value="5"></input>
+        </div>
+        <div>
+            <button id="calculate">Calculate</button>
+        </div>
+        <div>
+            <p>Compound interest is equal to: <span id="finalMoney"> </span>.</p>
+        </div>
+
+    <script>
+
+        document.getElementById("calculate").addEventListener("click", calculate);
+
+        function calculate() {
+            let principal = document.getElementById("principal").value;
+            let rate = document.getElementById("rate").value;
+            let n = document.getElementById("number-of-times").value;
+            let t = document.getElementById("time").value;
+
+            console.log(principal);
+            console.log(rate);
+            console.log(n);
+            console.log(t);
+
+            var finalMoney = principal * Math.pow(1 + (rate / n), n * t);
+            console.log(finalMoney);
+
+            document.getElementById("finalMoney").innerHTML = finalMoney;
+
+        }
+    </script>
+</body>
+</html>

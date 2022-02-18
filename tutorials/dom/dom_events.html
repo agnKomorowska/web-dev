@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body * {
+            margin: 10px;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body id="body">
+    <script>
+        window.onload = function() {
+            /*
+            function inputClicked1(event) {
+                console.log(event);
+                console.log("Input1 clicked");
+            }
+
+            let input2 = document.getElementById("input2");
+            input2.onclick = function inputClicked2(event) {
+                console.log("input2 clicked");
+            }
+
+            let body = document.getElementById("body");
+
+            function onKeyDown(event) {
+                console.log("key down: ", event.key);
+            }
+
+            function onMouseMove(event) {
+                console.log("mouse move: ", event.target);
+
+                body.removeEventListener("mousemove", onMouseMove);
+            }
+            
+            body.addEventListener("keydown", onKeyDown);
+            
+            body.addEventListener("mousemove", onMouseMove);*/
+        for (let el of document.querySelectorAll("*")) {
+            el.addEventListener("click", e => { 
+                console.log("Bubbling: " + el.tagName); e.stopPropagation();
+            });
+            el.addEventListener("click", e => console.log("Capturing: " + el.tagName), true);
+
+            
+        }
+    }
+
+        
+        
+    </script>
+    <p id="p">Paragraf
+        <form id="form" action="">Formularz
+            <input id="input1" type="text" onclick="inputClicked1(event);"><!-- doesn't work, also - bad practice-->
+            Input 2
+            <input id="input2" type="text">Input 2
+
+        </form>
+    </p>
+    
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            padding: 2em;
+            text-align: center;
+        }
+        #source-link {
+            width: 70%;
+        }
+        .link {
+            margin-top: 0.4em;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="source-link" placeholder="Enter link to shorten">
+    <button id="button">Generate</button>
+    <div class="link"> Code: <span id="hashcode"> </span></div>
+    <div class="link"> Full short link 1: <span id="full-short-link1"> </span></div>
+    <div class="link"> Full short link 2: <span id="full-short-link2"> </span></div>
+    <div class="link"> Full short link 3: <span id="full-short-link3"> </span></div>
+    
+    <script>
+        window.onload = function() {
+            document.getElementById("button").addEventListener("click", generateLinks);
+        }
+
+        function generateLinks() {
+            let url = document.getElementById("source-link").value;
+            fetch("https://api.shrtco.de/v2/shorten?url=" + url)
+            .then(response => response.json())
+            .then(data => linksReady(data));
+        }
+
+        function linksReady(data) {
+            console.log(data);
+            let result = data.result;
+            document.getElementById("hashcode").innerHTML = data.result.code;
+            setLinkToDomEl("full-short-link1", result.full_short_link);
+            setLinkToDomEl("full-short-link2", result.full_short_link2);
+            setLinkToDomEl("full-short-link3", result.full_short_link3);
+
+        }
+
+        function setLinkToDomEl(id, shortUrl) {
+            document.getElementById(id).innerHTML =
+             "<a href=\"" + shortUrl + "\">"+ shortUrl +"</a>";
+        }
+    </script>
+</body>
+</html>
