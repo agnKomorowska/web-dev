@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="style.css" class="style">
-    <link href="script.js" class="script">
+    <script src="script.js"></script>
 </head>
 <body>
     <section id="section-intro">
@@ -19,46 +19,46 @@
         <h3>Add expense</h3>
         <div id="div-add-box" class="box">
             <form id="form-add">
-                <label for="add-name">Name: </label>
-                <input type="text" name="add-name" id="add-name" required>
-                <label for="add-amount">Price: </label>
-                <input type="number" name="add-amount" id="add-amount" required>
-                <label for="add-payment-method">Payment Method: </label>
-                <select name="add-payment-method" id="add-payment-method">
+                <label for="name">Name: </label>
+                <input type="text" name="name" id="name" maxlength="70" required value="Random name">
+                <label for="price">Price: </label>
+                <input type="number" name="price" id="price" required min="0" step="0.01" value="17">
+                <label for="method">Payment Method: </label>
+                <select name="method" id="method">
                     <option value="" disabled selected>select</option>
-                    <option value="cash">Cash</option>
-                    <option value="debit-card">Debit card</option>
-                    <option value="credit-card">Credit card</option>
-                    <option value="transfer">Bank transfer</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Debit Card">Debit card</option>
+                    <option value="Credit Card">Credit card</option>
+                    <option value="Bank transfer">Bank transfer</option>
                 </select>
-                <label for="add-currency">Currency: </label>
-                <select name="add-currency" id="add-currency">
-                    <option value="" disabled selected>select</option>
-                    <option value="PLN">PLN</option>
-                    <option value="BGP">GBP</option>
+                <label for="currency">Currency: </label>
+                <select name="currency" id="currency" required>
+                    <option value="" disabled >select</option>
+                    <option value="PLN" selected>PLN</option>
+                    <option value="GBP">GBP</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
                 </select>
-                <label for="add-category">Category: </label>
-                <select name="add-category" id="add-category" aria-placeholder="select">
+                <label for="category">Category: </label>
+                <select name="category" id="category" aria-placeholder="select">
                     <option value="" disabled selected>select</option>
-                    <option value="housing">Housing</option>
-                    <option value="groceries">Groceries</option>
-                    <option value="dining-out">Dining Out</option>
-                    <option value="personal-care">Personal Care</option>
-                    <option value="transport">Transportation</option>
-                    <option value="health-care">Health Care</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="child-care">Child Care</option>
-                    <option value="pet-care">Pet Care</option>
-                    <option value="misc">Miscellaneous</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Dining Out">Dining Out</option>
+                    <option value="Personal Care">Personal Care</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Health Care">Health Care</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Child Care">Child Care</option>
+                    <option value="Pet Care">Pet Care</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
                 </select>
-                <label for="add-amount">Amount: </label>
-                <input type="number" name="add-amount" id="add-amount" value="1">
-                <label for="add-notes">Notes: </label>
-                <input type="text" name="add-notes" id="add-notes">
-                <label for="add-date">Date: </label>
-                <input type="date" name="add-date" id="add-date">
+                <label for="amount">Amount: </label>
+                <input type="number" name="amount" id="amount" min="1" value="1">
+                <label for="notes">Notes: </label>
+                <input type="text" name="notes" id="notes" maxlength="30">
+                <label for="date">Date: </label>
+                <input type="date" name="date" id="date">
                 <div class="empty"></div>
                 <button id="button-add" type="submit">Add expense</button>
             </form>
@@ -69,58 +69,63 @@
     <h3>Search & Filter</h3>
         <div id="div-search-box" class="box">
             <form id="form-search">
-                <label for="search-name">Search: </label>
-                <input id="search-name">
+                <label for="search-str">Search: </label>
+                <input type="text" name="search-str" id="search-str" required>
                 <button id="button-search" type="submit">Search</button>
+                <button id="button-search-clear">Clear</button>
             </form>
         </div>
     </section>
     <br>
     <section id="filter-section">
         <div id="div-filter-box" class="box">
-            <form action="javascript:;" onsubmit="myFunction(this);" id="form-filter">
-                <label for="filter-name">Filter by Price from: </label>
-                <input type="number" name="filter-name" id="filter-name">
-                <label for="filter-price-to">Price to: </label>
-                <input type="number" name="filter-price-to" id="filter-price-to">
-                <label for="filter-payment-method">Payment Method: </label>
-                <select name="filter-payment-method" id="filter-payment-method">
-                    <option value="" disabled selected>select</option>
-                    <option value="cash">Cash</option>
-                    <option value="debit-card">Debit card</option>
-                    <option value="credit-card">Credit card</option>
-                    <option value="transfer">Bank transfer</option>
+            <form id="form-filter">
+                <label for="priceFrom">Filter by Price from: </label>
+                <input type="number" name="priceFrom" id="priceFrom" min="0" step="0.01">
+                <label for="priceTo">Price to: </label>
+                <input type="number" name="priceTo" id="priceTo" min="0" step="0.01">
+                <label for="method">Payment Method: </label>
+                <select name="method" id="method">
+                    <option value="" selected>select</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Debit Card">Debit card</option>
+                    <option value="Credit Card">Credit card</option>
+                    <option value="Bank transfer">Bank transfer</option>
                 </select>
-                <label for="filter">Currency: </label>
-                <select name="filter-category" id="filter-category">
-                    <option value="" disabled selected>select</option>
+                <label for="currency">Currency: </label>
+                <select name="currency" id="currency">
+                    <option value="" selected>select</option>
                     <option value="PLN">PLN</option>
-                    <option value="BGP">GBP</option>
+                    <option value="GBP">GBP</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
                 </select>
-                <label for="filter-amount">Amount: </label>
-                <input type="number" name="filter-amount" id="filter-amount">
-                <label for="filter-category">Category: </label>
-                <select name="filter-category" id="filter-category">
-                    <option value="" disabled selected>select</option>
-                    <option value="housing">Housing</option>
-                    <option value="groceries">Groceries</option>
-                    <option value="dining-out">Dining Out</option>
-                    <option value="personal-care">Personal Care</option>
-                    <option value="transport">Transportation</option>
-                    <option value="health-care">Health Care</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="child-care">Child Care</option>
-                    <option value="pet-care">Pet Care</option>
-                    <option value="misc">Miscellaneous</option>
+                <label for="amount">Amount: </label>
+                <input type="number" name="amount" id="amount">
+                <label for="category">Category: </label>
+                <select name="category" id="category">
+                    <option value="" selected>select</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Dining Out">Dining Out</option>
+                    <option value="Personal Care">Personal Care</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Health Care">Health Care</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Child Care">Child Care</option>
+                    <option value="Pet Care">Pet Care</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
                 </select>
-                <label for="filter-date-from">Date from: </label>
-                <input type="date" name="filter-date-from" id="filter-date-from">
-                <label for="filter-date-to">Date to: </label>
-                <input type="date" name="filter-date-to" id="filter-date-to">
-                <div class="empty"></div>
-                <button id="button-filter" type="submit">Apply</button>
+                <label for="dateFrom">Date from: </label>
+                <input type="date" name="dateFrom" id="dateFrom">
+                <label for="dateTo">Date to: </label>
+                <input type="date" name="dateTo" id="dateTo">
+                <div class="button-wrapper">
+                    <button class="button-filter-clear">Clear</button>
+                </div>
+                <div class="button-wrapper">
+                    <button class="button-filter-apply" type="submit">Apply</button>
+                </div>
             </form>
         </div>
     </section>
@@ -128,22 +133,24 @@
         <h3>Expenses</h3>
         <div id="div-view-box" class="box">
             <form id="form-view">
-                    <p><b>Name</b></p>
-                    <p><b>Payment Method</b></p>
-                    <p><b>Category</b></p>
-                    <p><b>Date</b></p>
-                    <p><b>Price</b></p>
-                    <p><b>Amount</b></p>
-                    <p><b>Total Price</b></p>
+                    <p class="caption"><b>Name</b></p>
+                    <p class="caption"><b>Payment Method</b></p>
+                    <p class="caption"><b>Category</b></p>
+                    <p class="caption"><b>Date</b></p>
+                    <p class="caption"><b>Notes</b></p>
+                    <p class="number"><b>Price</b></p>
+                    <p class="number"><b>Amount</b></p>
+                    <p class="number"><b>Total Price</b></p>
                     <p></p>
 
                     <p>Playstation</p>
                     <p>Credit Card</p>
                     <p>Electronics</p>
                     <p>01/01/2022</p>
-                    <p>1000 zł</p>
-                    <p>1</p>
-                    <p>1000 zł</p>
+                    <p>my note</p>
+                    <p class="number">1000 zł</p>
+                    <p class="number">1</p>
+                    <p class="number">1000 zł</p>
                     <div class="button-wrapper">
                         <button class="button-remove" type="submit">
                             Remove
@@ -154,9 +161,10 @@
                     <p>Debit Card</p>
                     <p>Groceries</p>
                     <p>02/01/2022</p>
-                    <p>80 zł</p>
-                    <p>1</p>
-                    <p>800 zł</p>
+                    <p>my note</p>
+                    <p class="number">80 zł</p>
+                    <p class="number">1</p>
+                    <p class="number">800 zł</p>
                     <div class="button-wrapper">
                         <button class="button-remove" type="submit">
                             Remove
@@ -167,9 +175,10 @@
                     <p>Cash</p>
                     <p>Transport</p>
                     <p>03/01/2022</p>
-                    <p>4 zł</p>
-                    <p>4</p>
-                    <p>16 zł</p>
+                    <p>my note</p>
+                    <p class="number">4 zł</p>
+                    <p class="number">4</p>
+                    <p class="number">16 zł</p>
                     <div class="button-wrapper">
                         <button class="button-remove" type="submit">
                             Remove
@@ -180,16 +189,17 @@
                     <p>Debit Card</p>
                     <p>Rent</p>
                     <p>04/01/2022</p>
-                    <p>1800 zł</p>
-                    <p>1</p>
-                    <p>1800 zł</p>
+                    <p>my note</p>
+                    <p class="number">1800 zł</p>
+                    <p class="number">1</p>
+                    <p class="number">1800 zł</p>
                     <div class="button-wrapper">
                         <button class="button-remove" type="submit">
                             Remove
                         </button>
                     </div>
                     <p id="total-label"><b>Total</b></p>
-                    <p id="total-number"><b>3000 PLN<br>10 GBP</b></p></b>
+                    <p id="total-number"><b>3000 PLN<br>10 GBP</b></p>
                     <p class="empty"></p>
             </form>
         </div>

@@ -13,6 +13,7 @@ h2, h3 {
     margin-right: 20%;
     padding-top: 20px;
     padding-bottom: 20px;
+    border-radius: 10px;
 }
 
 #div-intro-box {
@@ -52,21 +53,22 @@ label {
     text-align: right;
 }
 
-#add-name {
+#name {
     grid-column: span 3;
 }
 
 #form-search {
     display: grid;
-    grid-template-columns: 80px 350px 80px;
+    grid-template-columns: 80px 350px 80px 80px;
     row-gap: 1em;
     white-space: nowrap;
     justify-content: center;
 }
 
-#button-search {
+#button-search, #button-search-clear {
     margin-left: 10px;
 }
+
 
 #form-filter {
     display: grid;
@@ -76,31 +78,39 @@ label {
     justify-content: center;
 }
 
-#total-label {
-    grid-column: span 6;
+.button-filter-clear {
+    margin-right: 10px;
+    width: 120px;
+}
+
+.button-filter-apply {
+    width: 120px;
 }
 
 #form-view {
     display: grid;
-    grid-template-columns: min-content min-content min-content min-content min-content min-content min-content min-content;
+    grid-template-columns: min-content min-content min-content min-content min-content min-content min-content min-content min-content;
     white-space: nowrap;
     justify-content: center;
-    text-align: center;
 }
 
 p {
     margin: 0px;
     padding: 10px;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    justify-content: center;
+    text-align: start;
+}
+
+p.caption {
     text-align: center;
+}
+
+p.number {
+    text-align: end;
 }
 
 .button-wrapper {
     
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    text-align: end;
 }
 
 .button-remove {
@@ -112,11 +122,23 @@ p {
     text-align: center;
 }
 
+#total-label {
+    grid-column: span 7;
+    font-weight: bold;
+}
+
+#total-number {
+    font-weight: bold;
+    text-align: end;
+}
 
 #div-summary {
     display: grid;
     grid-template-columns: min-content min-content min-content min-content ;
     white-space: nowrap;
     justify-content: center;
-    
+}
+
+.empty5 {
+    grid-column: span 5;
 }
