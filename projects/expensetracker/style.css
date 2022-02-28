@@ -78,7 +78,7 @@ label {
     justify-content: center;
 }
 
-.button-filter-clear {
+#button-filter-clear {
     margin-right: 10px;
     width: 120px;
 }

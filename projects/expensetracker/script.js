@@ -2,6 +2,8 @@ window.onload = function() {
 
     var app = new App();
 
+    app.init();
+
     let formAdd = document.getElementById("form-add");
     let formSearch = document.getElementById("form-search");
     let formFilter = document.getElementById("form-filter");
@@ -20,8 +22,26 @@ window.onload = function() {
         app.filterExpenses(searchStr, filterObj);
      });
 
+    let buttonSearchClear = document.getElementById("button-search-clear");
+    let buttonFilterClear = document.getElementById("button-filter-clear");
+    
+    buttonSearchClear.addEventListener("click", () => {
+        app.clearSearchStr();
+    });
+
+    buttonFilterClear.addEventListener("click", () => {
+        app.clearFilters();
+    });
+
+    let formView = document.getElementById("form-view"); 
+    formView.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (e.target.classList.contains("button-remove")) {
+            app.removeExpense(e.target);
+        }
+    })
+
     function createObjFromFormEntries(e) {
-        
         e.preventDefault();
         const data = new FormData(e.target);
 
@@ -29,7 +49,6 @@ window.onload = function() {
     }
 
     function getSearchStr(e) {
-
         e.preventDefault();
         const data = new FormData(e.target);
 
@@ -39,13 +58,26 @@ window.onload = function() {
 
 var App = function() {
 
-    this.expenses = [];
+    this.currencies = [ "PLN", "GBP", "USD", "EUR" ];
+    this.paymentMethods = [ "Cash", "Debit Card", "Credit Card", "Bank Transfer" ];
+    this.categories = [ "Housing", "Groceries", "Dining Out", "Personal Care", "Transportation", "Health Care", 
+        "Entertainment", "Child Care", "Pet Care", "Miscellaneous" ];
     
+        this.expenses = [];
+    
+    this.init = function() {
+        
+    }
+
     this.addExpense = function (expenseObj) {
         expenseObj.totalPrice = +((parseFloat(expenseObj.price)*parseFloat(expenseObj.amount)).toFixed(2));
         this.expenses.push(expenseObj);
-        this.resetSearchStr();
-        this.resetFilters();
+        console.log(this.expenses);
+        this.resetForm(document.getElementById("form-add"));
+        let amount = document.getElementById("amount");
+        amount.value = 1;
+        this.resetForm(document.getElementById("form-search"));
+        this.resetForm(document.getElementById("form-filter"));
         this.showExpenses("", {});
     }
 
@@ -53,8 +85,18 @@ var App = function() {
         this.showExpenses(searchStr, {});
     }
 
+    this.clearSearchStr = function () {
+        this.resetForm(document.getElementById("form-search"));
+        this.showExpenses("", {});
+    }
+
     this.filterExpenses = function (searchStr, filterObj) {
         this.showExpenses(searchStr, filterObj);
+    }
+
+    this.clearFilters = function () {
+        this.resetForm(document.getElementById("form-filter"));
+        this.showExpenses("", {});
     }
 
     this.clearView = function() {
@@ -67,21 +109,41 @@ var App = function() {
         }
     }
 
+    this.removeExpense = function (removeButton) {
+
+        let index = removeButton.id;
+        delete this.expenses[(parseInt(index))];
+
+        let searchForm = document.getElementById("form-search");
+        let searchData = new FormData(searchForm);
+        let searchStr = searchData.get('search-str');
+
+        let filterForm = document.getElementById("form-filter");
+        const filterData = new FormData(filterForm);
+        let filterObj = Object.fromEntries(filterData.entries());
+
+        this.showExpenses(searchStr, filterObj);
+    }
+
     this.showExpenses = function (searchStr, filterObj) {
         this.clearView();
+        let totalCurrencies = {};
+        for (let index in this.currencies) {
+            totalCurrencies[this.currencies[index]] = 0;
+        }
         for (let i = 0; i < this.expenses.length; i++) {
-            let expense = this.expenses[i];
-            //let total = 0;
+            if (!this.isEmpty(this.expenses[i])) {
+                let expense = this.expenses[i];
 
-            if (this.containsSearchStr(expense, searchStr)) {
-                if (this.isEmpty(filterObj) || this.filtersMatch(expense, filterObj)) {
-                    this.showExpense(this.expenses[i]);
-                    //total += this.expenses[i].totalPrice;
-                    
+                if (this.containsSearchStr(expense, searchStr)) {
+                    if (this.isEmpty(filterObj) || this.filtersMatch(expense, filterObj)) {
+                        this.showExpense(this.expenses[i], i);
+                        totalCurrencies[expense.currency] += parseFloat(this.expenses[i].totalPrice);
+                    }
                 }
             }
         }
-        this.addViewSummary();
+        this.addViewSummary(totalCurrencies);
     }
 
     this.containsSearchStr = function (expense, searchStr) {
@@ -100,41 +162,37 @@ var App = function() {
     this.filtersMatch = function(expense, filterObj) {
         for (let key in filterObj) {
             if (filterObj.hasOwnProperty(key)) {
-                if (key === "method" || key === "currency" || key === "amount" || key === "category") {
-                    if (!this.singleFilterMatches(expense[key], filterObj[key])) {
-                        return false;
-                    }
-                }
                 switch (key) {
+                    case "method":
+                    case "currency":
+                    case "amount":
+                    case "category": {
+                        if (!this.singleFilterMatches(expense[key], filterObj[key])) {
+                            return false;
+                        }
+                        break;
+                    }
                     case "priceFrom": {
-                        let expenseKey = key.slice(0, key.length - 4);
-
-                        if (!this.isPriceHigherThanOrEqual(expense[expenseKey], filterObj[key])) {
+                        if (!this.isPriceHigherThanOrEqual(expense["price"], filterObj[key])) {
                             return false;
                         }
                         break;
                     }
                     case "priceTo": {
-                        let expenseKey = key.slice(0, key.length - 2);
-
-                        if (!this.isPriceLowerThanOrEqual(expense[expenseKey], filterObj[key])) {
+                        if (!this.isPriceLowerThanOrEqual(expense["price"], filterObj[key])) {
                             return false;
                         }
                         break;
                     }
                     case "dateFrom": {
-                        let expenseKey = key.slice(0, key.length - 4);
-
-                        if (!this.isDateHigherThanOrEqual(expense[expenseKey], filterObj[key])) {
+                        if (!this.isDateHigherThanOrEqual(expense["date"], filterObj[key])) {
                             console.log("CHECK THIS");
                             return false;
                         }
                         break;
                     }
                     case "dateTo": {
-                        let expenseKey = key.slice(0, key.length - 2);
-
-                        if (!this.isDateLowerThanOrEqual(expense[expenseKey], filterObj[key])) {
+                        if (!this.isDateLowerThanOrEqual(expense["date"], filterObj[key])) {
                             return false;
                         }
                         break;
@@ -142,43 +200,46 @@ var App = function() {
                 }
             }   
         }
-        console.log("Udalo sie");
         return true;
     }
 
     this.singleFilterMatches = function(expenseValue, filterValue) {
-        if (filterValue === undefined || filterValue === null || filterValue === "" || filterValue === expenseValue) {
+        if (this.isEmpty(filterValue) || filterValue === expenseValue) {
             return true;
         } else return false;
     }
 
     this.isPriceHigherThanOrEqual = function (expenseValue, filterValue) {
-        if (filterValue === undefined || filterValue === null || filterValue === "" || parseFloat(expenseValue) >= parseFloat(filterValue) ) {
+        if (this.isEmpty(filterValue) || parseFloat(expenseValue) >= parseFloat(filterValue) ) {
             return true;
         } else return false;
     }
 
     this.isPriceLowerThanOrEqual = function (expenseValue, filterValue) {
-        if (filterValue === undefined || filterValue === null || filterValue === "" || parseFloat(expenseValue) <= parseFloat(filterValue)) {
+        if (this.isEmpty(filterValue) || parseFloat(expenseValue) <= parseFloat(filterValue)) {
             return true;
         } else return false;
     }
 
     this.isDateHigherThanOrEqual = function (expenseValue, filterValue) {
-        if (filterValue === undefined || filterValue === null || filterValue === "" || new Date(expenseValue) >= new Date(filterValue)) {
-            console.log("Hurray DATE DATE FROM, " + filterValue);
+        if (this.isEmpty(filterValue) || new Date(expenseValue) >= new Date(filterValue)) {
             return true;
         } else return false;
     }
 
     this.isDateLowerThanOrEqual = function (expenseValue, filterValue) {
-        if (filterValue === undefined || filterValue === null || filterValue === "" || new Date(expenseValue) <= new Date(filterValue)) {
-            console.log("Hurray DATE DATE TO, " + filterValue);
+        if (this.isEmpty(filterValue) || new Date(expenseValue) <= new Date(filterValue)) {
             return true;
         } else return false;
     }
 
-    this.addViewSummary = function() {
+    this.isEmpty = function(str) {
+        if (str === undefined || str === null || str === "") {
+            return true;
+        } else return false;
+    }
+
+    this.addViewSummary = function(totalCurrencies) {
         let view = document.getElementById("form-view");
 
         let totalLabel = document.createElement("p");
@@ -187,7 +248,16 @@ var App = function() {
 
         let totalNumber = document.createElement("p");
         totalNumber.setAttribute("id", "total-number");
-        totalNumber.innerHTML = "3000 PLN <br> 10 GBP";
+        
+        let totalNumberStr = "";
+        for (let key in totalCurrencies) {
+            if (totalCurrencies[key] !== 0) {
+                totalNumberStr += key + " " + totalCurrencies[key];
+                totalNumberStr += "\n<br>\n";
+            }
+        }
+        totalNumberStr = totalNumberStr.slice(0, totalNumberStr.length - 6) // remove the last <br>
+        totalNumber.innerHTML = totalNumberStr;
 
         let emptyCell = document.createElement("p");
         emptyCell.setAttribute("class", "empty");
@@ -197,7 +267,7 @@ var App = function() {
         view.appendChild(emptyCell);
     }
 
-    this.showExpense = function(expense) {
+    this.showExpense = function(expense, index) {
 
         let view = document.getElementById("form-view");
 
@@ -225,7 +295,7 @@ var App = function() {
         amount.setAttribute("class", "number");
 
         let totalPrice = document.createElement("p");
-        totalPriceNumber = parseFloat(expense.price) * parseFloat(expense.amount);
+        totalPriceNumber = expense.totalPrice;
         totalPrice.textContent = expense.currency + " " + totalPriceNumber;
         totalPrice.setAttribute("class", "number");
         
@@ -235,7 +305,8 @@ var App = function() {
         let removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.setAttribute("class", "button-remove");
-        removeButton.setAttribute("type", "submit");
+        removeButton.setAttribute("id", index);
+        
 
         removeButtonWrapper.appendChild(removeButton);
 
@@ -250,14 +321,38 @@ var App = function() {
         view.appendChild(removeButtonWrapper);
     }
 
-    this.resetSearchStr = function() {
+    
+    
+    this.resetForm = function(form) {
+        // clearing inputs
+        let inputs = form.getElementsByTagName("input");
+        for (let i = 0; i < inputs.length; i++) {
+            switch (inputs[i].type) {
+                // case 'hidden':
+                case "text":
+                case "number":
+                case "date": 
+                    inputs[i].value = "";
+                    break;
+                
+                case "radio":
+                case "checkbox":
+                    inputs[i].checked = false;
+            }
+        }
 
+        // clearing selects
+        let selects = form.getElementsByTagName("select");
+        for (let i = 0; i < selects.length; i++)
+            selects[i].selectedIndex = 0;
+
+        // clearing textarea
+        let text = form.getElementsByTagName("textarea");
+        for (let i = 0; i < text.length; i++)
+            text[i].innerHTML = "";
+
+        return false;
     }
-
-    this.resetFilters = function () {
-
-    }
-
 }
 
 

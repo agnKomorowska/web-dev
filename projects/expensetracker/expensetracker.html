@@ -20,9 +20,9 @@
         <div id="div-add-box" class="box">
             <form id="form-add">
                 <label for="name">Name: </label>
-                <input type="text" name="name" id="name" maxlength="70" required value="Random name">
+                <input type="text" name="name" id="name" maxlength="70" required>
                 <label for="price">Price: </label>
-                <input type="number" name="price" id="price" required min="0" step="0.01" value="17">
+                <input type="number" name="price" id="price" required min="0" step="0.01">
                 <label for="method">Payment Method: </label>
                 <select name="method" id="method">
                     <option value="" disabled selected>select</option>
@@ -33,8 +33,8 @@
                 </select>
                 <label for="currency">Currency: </label>
                 <select name="currency" id="currency" required>
-                    <option value="" disabled >select</option>
-                    <option value="PLN" selected>PLN</option>
+                    <option value="" disabled selected>select</option>
+                    <option value="PLN" >PLN</option>
                     <option value="GBP">GBP</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
@@ -54,7 +54,7 @@
                     <option value="Miscellaneous">Miscellaneous</option>
                 </select>
                 <label for="amount">Amount: </label>
-                <input type="number" name="amount" id="amount" min="1" value="1">
+                <input type="number" name="amount" id="amount" min="1" value="1" required>
                 <label for="notes">Notes: </label>
                 <input type="text" name="notes" id="notes" maxlength="30">
                 <label for="date">Date: </label>
@@ -81,11 +81,11 @@
         <div id="div-filter-box" class="box">
             <form id="form-filter">
                 <label for="priceFrom">Filter by Price from: </label>
-                <input type="number" name="priceFrom" id="priceFrom" min="0" step="0.01">
+                <input type="number" name="priceFrom" id="filter-price-from" min="0" step="0.01">
                 <label for="priceTo">Price to: </label>
-                <input type="number" name="priceTo" id="priceTo" min="0" step="0.01">
+                <input type="number" name="priceTo" id="filter-price-to" min="0" step="0.01">
                 <label for="method">Payment Method: </label>
-                <select name="method" id="method">
+                <select name="method" id="filter-method">
                     <option value="" selected>select</option>
                     <option value="Cash">Cash</option>
                     <option value="Debit Card">Debit card</option>
@@ -93,7 +93,7 @@
                     <option value="Bank transfer">Bank transfer</option>
                 </select>
                 <label for="currency">Currency: </label>
-                <select name="currency" id="currency">
+                <select name="currency" id="filter-currency">
                     <option value="" selected>select</option>
                     <option value="PLN">PLN</option>
                     <option value="GBP">GBP</option>
@@ -101,9 +101,9 @@
                     <option value="USD">USD</option>
                 </select>
                 <label for="amount">Amount: </label>
-                <input type="number" name="amount" id="amount">
+                <input type="number" name="amount" id="filter-amount">
                 <label for="category">Category: </label>
-                <select name="category" id="category">
+                <select name="category" id="filter-category">
                     <option value="" selected>select</option>
                     <option value="Housing">Housing</option>
                     <option value="Groceries">Groceries</option>
@@ -117,13 +117,13 @@
                     <option value="Miscellaneous">Miscellaneous</option>
                 </select>
                 <label for="dateFrom">Date from: </label>
-                <input type="date" name="dateFrom" id="dateFrom">
+                <input type="date" name="dateFrom" id="filter-date-from">
                 <label for="dateTo">Date to: </label>
-                <input type="date" name="dateTo" id="dateTo">
+                <input type="date" name="dateTo" id="filter-date-to">
                 <div class="button-wrapper">
-                    <button class="button-filter-clear">Clear</button>
+                    <button id="button-filter-clear">Clear</button>
                 </div>
-                <div class="button-wrapper">
+                <div id="button-wrapper">
                     <button class="button-filter-apply" type="submit">Apply</button>
                 </div>
             </form>
