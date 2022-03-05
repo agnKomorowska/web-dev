@@ -22,7 +22,7 @@
                 <label for="name">Name: </label>
                 <input type="text" name="name" id="name" maxlength="70" required>
                 <label for="price">Price: </label>
-                <input type="number" name="price" id="price" required min="0" step="0.01">
+                <input type="number" name="price" id="price" required min="0" max="100000000" step="0.01">
                 <label for="method">Payment Method: </label>
                 <select name="method" id="method">
                     <option value="" disabled selected>select</option>
@@ -54,7 +54,7 @@
                     <option value="Miscellaneous">Miscellaneous</option>
                 </select>
                 <label for="amount">Amount: </label>
-                <input type="number" name="amount" id="amount" min="1" value="1" required>
+                <input type="number" name="amount" id="amount" min="1" value="1" max="100000000" required>
                 <label for="notes">Notes: </label>
                 <input type="text" name="notes" id="notes" maxlength="30">
                 <label for="date">Date: </label>
@@ -81,9 +81,9 @@
         <div id="div-filter-box" class="box narrow">
             <form id="form-filter">
                 <label for="priceFrom">Filter by Price from: </label>
-                <input type="number" name="priceFrom" id="filter-price-from" min="0" step="0.01">
+                <input type="number" name="priceFrom" id="filter-price-from" min="0" max="100000000" step="0.01">
                 <label for="priceTo">Price to: </label>
-                <input type="number" name="priceTo" id="filter-price-to" min="0" step="0.01">
+                <input type="number" name="priceTo" id="filter-price-to" min="0" max="100000000" step="0.01">
                 <label for="method">Payment Method: </label>
                 <select name="method" id="filter-method">
                     <option value="" selected>select</option>
@@ -142,7 +142,9 @@
                     <p class="caption number p-amount"><b>Amount</b></p>
                     <p class="caption number p-total-price"><b>Total Price</b></p>
                     <div></div>
-
+                    <p id="total-label">Total</p>
+                    <p id="total-number"></p>
+                    <div class="empty"></div>
             </form>
         </div>
     </section>
@@ -163,6 +165,40 @@
                 <p><b>Category</b></p>
                 <p><b>Expenses</b></p>
                 <p><b>Percentage</b></p>
+                <p></p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Housing</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Groceries</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Dining Out</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Personal Care</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Transportation</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Health Care</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Entertainment</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Child Care</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Pet Care</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                    <p>Miscellaneous</p>
+                    <p class="number">0</p>
+                    <p class="number">0%</p>
+                </div>
             </div>
         </div>
     </section>

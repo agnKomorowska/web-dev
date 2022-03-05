@@ -126,8 +126,11 @@ var App = function() {
     this.removeExpense = function (removeButton) {
 
         let index = removeButton.id;
+        let currency = this.expenses[(parseInt(index))].currency;
+        console.log(currency);
         delete this.expenses[(parseInt(index))];
 
+        console.log(currency);
         let searchForm = document.getElementById("form-search");
         let searchData = new FormData(searchForm);
         let searchStr = searchData.get('search-str');
@@ -137,6 +140,8 @@ var App = function() {
         let filterObj = Object.fromEntries(filterData.entries());
 
         this.showExpenses(searchStr, filterObj);
+
+        this.showSummary(currency);
     }
 
     this.showExpenses = function (searchStr, filterObj) {
@@ -358,10 +363,12 @@ var App = function() {
         totalByCategory.undefined = 0;
 
         for (let i=0; i < this.expenses.length; i++) {
-            let expense = this.expenses[i];
-            if (expense.currency === currency) {                
-                totalByCategory[expense.category] += expense.totalPrice;
-                totalByCategory[expense.category] = +(totalByCategory[expense.category].toFixed(2));
+            if (!this.isEmpty(this.expenses[i])) {
+                let expense = this.expenses[i];
+                if (expense.currency === currency) {                
+                    totalByCategory[expense.category] += expense.totalPrice;
+                    totalByCategory[expense.category] = +(totalByCategory[expense.category].toFixed(2));
+                }
             }
         }
 
