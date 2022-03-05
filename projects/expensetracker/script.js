@@ -78,7 +78,34 @@ var App = function() {
         this.expenses = [];
     
     this.init = function() {
-        
+        this.setMaxDate();
+    }
+
+    this.setMaxDate = function() {
+        let dateElementAdd = document.getElementById("date");
+        let dateElementFilterFrom = document.getElementById("filter-date-from");
+        let dateElementFilterTo = document.getElementById("filter-date-to");
+
+        let date = new Date();
+        let y = date.getFullYear();
+        let yTwoYearsAgo = date.getFullYear() - 2;
+        let m = date.getMonth() + 1;
+        let d = date.getDate();
+        if (m < 10)
+            m = '0' + m.toString();
+        if (d < 10)
+            d = '0' + d.toString();
+
+        let minDate = yTwoYearsAgo + '-' + m + '-' + d;
+        let maxDate = y + '-' + m + '-' + d;
+
+        dateElementAdd.setAttribute("min", minDate);
+        dateElementFilterFrom.setAttribute("min", minDate);
+        dateElementFilterTo.setAttribute("min", minDate);
+
+        dateElementAdd.setAttribute("max", maxDate);
+        dateElementFilterFrom.setAttribute("max", maxDate);
+        dateElementFilterTo.setAttribute("max", maxDate);
     }
 
     this.addExpense = function (expenseObj) {
