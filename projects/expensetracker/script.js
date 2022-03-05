@@ -41,6 +41,13 @@ window.onload = function() {
         }
     })
 
+
+    let summaryCurrency = document.getElementById("summary-currency");;
+    summaryCurrency.addEventListener("change", (e) => {
+        let currency = getSummaryCurrency(e);
+        app.showSummary(currency);
+    });
+
     function createObjFromFormEntries(e) {
         e.preventDefault();
         const data = new FormData(e.target);
@@ -53,6 +60,11 @@ window.onload = function() {
         const data = new FormData(e.target);
 
         return data.get('search-str');
+    }
+
+    function getSummaryCurrency(e) {
+        e.preventDefault();
+        return e.target.value;
     }
 }
 
@@ -72,13 +84,15 @@ var App = function() {
     this.addExpense = function (expenseObj) {
         expenseObj.totalPrice = +((parseFloat(expenseObj.price)*parseFloat(expenseObj.amount)).toFixed(2));
         this.expenses.push(expenseObj);
-        console.log(this.expenses);
+
         this.resetForm(document.getElementById("form-add"));
         let amount = document.getElementById("amount");
         amount.value = 1;
         this.resetForm(document.getElementById("form-search"));
         this.resetForm(document.getElementById("form-filter"));
         this.showExpenses("", {});
+
+        this.showSummary(expenseObj.currency);
     }
 
     this.searchExpenses = function(searchStr) {
@@ -139,6 +153,7 @@ var App = function() {
                     if (this.isEmpty(filterObj) || this.filtersMatch(expense, filterObj)) {
                         this.showExpense(this.expenses[i], i);
                         totalCurrencies[expense.currency] += parseFloat(this.expenses[i].totalPrice);
+                        totalCurrencies[expense.currency] = +(totalCurrencies[expense.currency].toFixed(2));
                     }
                 }
             }
@@ -186,7 +201,6 @@ var App = function() {
                     }
                     case "dateFrom": {
                         if (!this.isDateHigherThanOrEqual(expense["date"], filterObj[key])) {
-                            console.log("CHECK THIS");
                             return false;
                         }
                         break;
@@ -259,7 +273,7 @@ var App = function() {
         totalNumberStr = totalNumberStr.slice(0, totalNumberStr.length - 6) // remove the last <br>
         totalNumber.innerHTML = totalNumberStr;
 
-        let emptyCell = document.createElement("p");
+        let emptyCell = document.createElement("div");
         emptyCell.setAttribute("class", "empty");
 
         view.appendChild(totalLabel);
@@ -273,31 +287,36 @@ var App = function() {
 
         let name = document.createElement("p");
         name.textContent = expense.name;
+        name.setAttribute("class", "p-name");
         
         let paymentMethod = document.createElement("p");
         paymentMethod.textContent = expense.method;
+        paymentMethod.setAttribute("class", "p-method");
 
         let category = document.createElement("p");
         category.textContent = expense.category;
+        category.setAttribute("class", "p-category");
 
         let date = document.createElement("p");
         date.textContent = expense.date;
+        date.setAttribute("class", "p-date");
 
         let notes = document.createElement("p");
         notes.textContent = expense.notes;
+        notes.setAttribute("class", "p-notes");
 
         let price = document.createElement("p");
         price.textContent = expense.currency + " " + expense.price;
-        price.setAttribute("class", "number");
+        price.setAttribute("class", "p-price number");
 
         let amount = document.createElement("p");
         amount.textContent = expense.amount;
-        amount.setAttribute("class", "number");
+        amount.setAttribute("class", "p-amount number");
 
         let totalPrice = document.createElement("p");
         totalPriceNumber = expense.totalPrice;
         totalPrice.textContent = expense.currency + " " + totalPriceNumber;
-        totalPrice.setAttribute("class", "number");
+        totalPrice.setAttribute("class", "p-total-price number");
         
         let removeButtonWrapper = document.createElement("div");
         removeButtonWrapper.setAttribute("class", "button-wrapper");
@@ -307,7 +326,6 @@ var App = function() {
         removeButton.setAttribute("class", "button-remove");
         removeButton.setAttribute("id", index);
         
-
         removeButtonWrapper.appendChild(removeButton);
 
         view.appendChild(name);
@@ -321,7 +339,80 @@ var App = function() {
         view.appendChild(removeButtonWrapper);
     }
 
-    
+    this.clearSummary = function () {
+        let summary = document.getElementById("div-summary");
+        let length = summary.children.length;
+
+        // to index 8 because of table captions 
+        for (let i = length - 1; i > 2; i--) {
+            summary.removeChild(summary.children[i]);
+        }
+    }
+
+    this.showSummary = function(currency) {
+
+        let totalByCategory = {};
+        for (let index in this.categories) {
+            totalByCategory[this.categories[index]] = 0;
+        }
+        totalByCategory.undefined = 0;
+
+        for (let i=0; i < this.expenses.length; i++) {
+            let expense = this.expenses[i];
+            if (expense.currency === currency) {                
+                totalByCategory[expense.category] += expense.totalPrice;
+                totalByCategory[expense.category] = +(totalByCategory[expense.category].toFixed(2));
+            }
+        }
+
+        this.clearSummary();
+
+
+        let sum = 0;
+        for (let index in totalByCategory) {
+            sum += +(totalByCategory[index].toFixed(2));
+        }
+        sum = +(sum.toFixed(2));
+
+        let summary = document.getElementById("div-summary");
+        
+        let noCategoryElement = document.createElement("p");
+        let noCategoryExpensesElement = document.createElement("p");
+        noCategoryExpensesElement.textContent = currency + " " + totalByCategory["undefined"];
+        noCategoryExpensesElement.setAttribute("class", "number");
+        let noCategoryPercentageElement = document.createElement("p");
+        if (sum !== 0) {
+            noCategoryPercentageElement.textContent = (+((totalByCategory["undefined"] * 100 / sum).toFixed(2))) + "%";
+        } else noCategoryPercentageElement.textContent = "0%";
+        noCategoryPercentageElement.setAttribute("class", "number");
+
+        summary.appendChild(noCategoryElement);
+        summary.appendChild(noCategoryExpensesElement);
+        summary.appendChild(noCategoryPercentageElement);
+
+        for (let index in this.categories) {
+            let category = this.categories[index];
+            
+            let categoryElement = document.createElement("p");
+            categoryElement.textContent = category;
+            
+            let expensesElement = document.createElement("p");
+            expensesElement.textContent = currency + " " + totalByCategory[category];
+            expensesElement.setAttribute("class", "number");
+
+            let percentageElement = document.createElement("p");
+            if (sum !== 0) {
+                percentageElement.textContent = (+((totalByCategory[category] * 100 / sum).toFixed(2))) + "%";
+            } else percentageElement.textContent = "0%" ;
+            percentageElement.setAttribute("class", "number");
+
+            summary.appendChild(categoryElement);
+            summary.appendChild(expensesElement);
+            summary.appendChild(percentageElement);
+        }
+
+
+    }    
     
     this.resetForm = function(form) {
         // clearing inputs

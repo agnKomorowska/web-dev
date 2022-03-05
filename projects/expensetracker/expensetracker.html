@@ -11,13 +11,13 @@
 <body>
     <section id="section-intro">
         <br>
-        <div id="div-intro-box" class="box">
+        <div id="div-intro-box" class="box narrow">
             <h2>Expense Tracker</h2>
         </div>
     </section>
     <section id="section-add">
         <h3>Add expense</h3>
-        <div id="div-add-box" class="box">
+        <div id="div-add-box" class="box narrow">
             <form id="form-add">
                 <label for="name">Name: </label>
                 <input type="text" name="name" id="name" maxlength="70" required>
@@ -67,7 +67,7 @@
     </section>
     <section id="search-section"></section>
     <h3>Search & Filter</h3>
-        <div id="div-search-box" class="box">
+        <div id="div-search-box" class="box narrow">
             <form id="form-search">
                 <label for="search-str">Search: </label>
                 <input type="text" name="search-str" id="search-str" required>
@@ -78,7 +78,7 @@
     </section>
     <br>
     <section id="filter-section">
-        <div id="div-filter-box" class="box">
+        <div id="div-filter-box" class="box narrow">
             <form id="form-filter">
                 <label for="priceFrom">Filter by Price from: </label>
                 <input type="number" name="priceFrom" id="filter-price-from" min="0" step="0.01">
@@ -120,10 +120,10 @@
                 <input type="date" name="dateFrom" id="filter-date-from">
                 <label for="dateTo">Date to: </label>
                 <input type="date" name="dateTo" id="filter-date-to">
-                <div class="button-wrapper">
+                <div class="button-wrapper button-wrapper-filter">
                     <button id="button-filter-clear">Clear</button>
                 </div>
-                <div id="button-wrapper">
+                <div id="button-wrapper button-wrapper-filter">
                     <button class="button-filter-apply" type="submit">Apply</button>
                 </div>
             </form>
@@ -131,139 +131,38 @@
     </section>
     <section id="section-view">
         <h3>Expenses</h3>
-        <div id="div-view-box" class="box">
+        <div id="div-view-box" class="box wide">
             <form id="form-view">
-                    <p class="caption"><b>Name</b></p>
-                    <p class="caption"><b>Payment Method</b></p>
-                    <p class="caption"><b>Category</b></p>
-                    <p class="caption"><b>Date</b></p>
-                    <p class="caption"><b>Notes</b></p>
-                    <p class="number"><b>Price</b></p>
-                    <p class="number"><b>Amount</b></p>
-                    <p class="number"><b>Total Price</b></p>
-                    <p></p>
+                    <p class="caption p-name"><b>Name</b></p>
+                    <p class="caption p-method"><b>Payment Method</b></p>
+                    <p class="caption p-category"><b>Category</b></p>
+                    <p class="caption p-date"><b>Date</b></p>
+                    <p class="caption p-notes"><b>Notes</b></p>
+                    <p class="caption number p-price"><b>Price</b></p>
+                    <p class="caption number p-amount"><b>Amount</b></p>
+                    <p class="caption number p-total-price"><b>Total Price</b></p>
+                    <div></div>
 
-                    <p>Playstation</p>
-                    <p>Credit Card</p>
-                    <p>Electronics</p>
-                    <p>01/01/2022</p>
-                    <p>my note</p>
-                    <p class="number">1000 zł</p>
-                    <p class="number">1</p>
-                    <p class="number">1000 zł</p>
-                    <div class="button-wrapper">
-                        <button class="button-remove" type="submit">
-                            Remove
-                        </button>
-                    </div>
-
-                    <p>Groceries at Żabka</p>
-                    <p>Debit Card</p>
-                    <p>Groceries</p>
-                    <p>02/01/2022</p>
-                    <p>my note</p>
-                    <p class="number">80 zł</p>
-                    <p class="number">1</p>
-                    <p class="number">800 zł</p>
-                    <div class="button-wrapper">
-                        <button class="button-remove" type="submit">
-                            Remove
-                        </button>
-                    </div>
-
-                    <p>Bus tickets</p>
-                    <p>Cash</p>
-                    <p>Transport</p>
-                    <p>03/01/2022</p>
-                    <p>my note</p>
-                    <p class="number">4 zł</p>
-                    <p class="number">4</p>
-                    <p class="number">16 zł</p>
-                    <div class="button-wrapper">
-                        <button class="button-remove" type="submit">
-                            Remove
-                        </button>
-                    </div>
-
-                    <p>Rent</p>
-                    <p>Debit Card</p>
-                    <p>Rent</p>
-                    <p>04/01/2022</p>
-                    <p>my note</p>
-                    <p class="number">1800 zł</p>
-                    <p class="number">1</p>
-                    <p class="number">1800 zł</p>
-                    <div class="button-wrapper">
-                        <button class="button-remove" type="submit">
-                            Remove
-                        </button>
-                    </div>
-                    <p id="total-label"><b>Total</b></p>
-                    <p id="total-number"><b>3000 PLN<br>10 GBP</b></p>
-                    <p class="empty"></p>
             </form>
         </div>
     </section>
     <section>
         <h3>Summary</h3>
-        <div id="div-summary-box" class="box">
+        <div id="div-summary-box" class="box wide">
+            <form id="form-summary">
+                <label for="currency">Currency: </label>
+                <select type="submit" name="currency" id="summary-currency">
+                    <option value="" selected disabled>select</option>
+                    <option value="PLN">PLN</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                </select>
+            </form>
             <div id="div-summary">
                 <p><b>Category</b></p>
-                <p><b>Expenses in PLN</b></p>
-                <p><b>Expenses in GBP</b></p>
+                <p><b>Expenses</b></p>
                 <p><b>Percentage</b></p>
-            
-                <p>Housing</p>
-                <p>3000</p>
-                <p>600</p>
-                <p></p>
-
-                <p>Groceries</p>
-                <p>1000</p>
-                <p>200</p>
-                <p>33% </p>
-
-                <p>Dining Out</p>
-                <p>1400</p>
-                <p>280</p>
-                <p>45%</p>
-
-                <p>Personal Care</p>
-                <p>600</p>
-                <p>120</p>
-                <p>22%</p>
-
-                <p>Transportation</p>
-                <p>3000</p>
-                <p>600</p>
-                <p></p>
-
-                <p>Health Care</p>
-                <p>3000</p>
-                <p>600</p>
-                <p></p>
-
-                <p>Entertainment</p>
-                <p>3000</p>
-                <p>600</p>
-                <p></p>
-
-                <p>Child Care</p>
-                <p>3000</p>
-                <p>600</p>
-                <p></p>
-
-                <p>Pet Care</p>
-                <p>3000</p>
-                <p>600</p>
-                <p>20%</p>
-
-                
-
-                <p>Miscellaneous</p>
-                <p>3000</p>
-                <p>600</p>
-                <p></p>
             </div>
         </div>
     </section>
