@@ -296,7 +296,7 @@ var App = function() {
         let totalNumberStr = "";
         for (let key in totalCurrencies) {
             if (totalCurrencies[key] !== 0) {
-                totalNumberStr += key + " " + totalCurrencies[key];
+                totalNumberStr += key + " " + this.floatWithComas(totalCurrencies[key]);
                 totalNumberStr += "\n<br>\n";
             }
         }
@@ -336,16 +336,16 @@ var App = function() {
         notes.setAttribute("class", "p-notes");
 
         let price = document.createElement("p");
-        price.textContent = expense.currency + " " + expense.price;
+        price.textContent = expense.currency + " " + this.floatWithComas(expense.price);
         price.setAttribute("class", "p-price number");
 
         let amount = document.createElement("p");
-        amount.textContent = expense.amount;
+        amount.textContent = this.intWithComas(expense.amount);
         amount.setAttribute("class", "p-amount number");
 
         let totalPrice = document.createElement("p");
         totalPriceNumber = expense.totalPrice;
-        totalPrice.textContent = expense.currency + " " + totalPriceNumber;
+        totalPrice.textContent = expense.currency + " " + this.floatWithComas(totalPriceNumber);
         totalPrice.setAttribute("class", "p-total-price number");
         
         let removeButtonWrapper = document.createElement("div");
@@ -368,6 +368,31 @@ var App = function() {
         view.appendChild(totalPrice);
         view.appendChild(removeButtonWrapper);
     }
+
+    this.floatWithComas = function(number) {
+        let str = parseFloat(number).toFixed(2);
+        let strWithComas = "";
+        for (let i = str.length - 1; i >= 0; i--) {
+            strWithComas = str[i] + strWithComas;
+            if (i < str.length - 5 && ((str.length - i) % 3) === 0 && i !== 0) {
+                strWithComas = "," + strWithComas;
+            }
+        }
+        return strWithComas;
+    }
+
+    this.intWithComas = function (number) {
+        let str = parseFloat(number).toFixed(0);
+        let strWithComas = "";
+        for (let i = str.length - 1; i >= 0; i--) {
+            strWithComas = str[i] + strWithComas;
+            if (i < str.length - 2 && ((str.length - i) % 3) === 0 && i !== 0) {
+                strWithComas = "," + strWithComas;
+            }
+        }
+        return strWithComas;
+    }
+
 
     this.showSummary = function(currency) {
 
@@ -394,7 +419,7 @@ var App = function() {
         } else categoryElement.textContent = category;
 
         let expensesElement = document.createElement("p");
-        expensesElement.textContent = currency + " " + totalByCategory[category];
+        expensesElement.textContent = currency + " " + this.floatWithComas(totalByCategory[category]);
         expensesElement.setAttribute("class", "number");
 
         let percentageElement = document.createElement("p");
