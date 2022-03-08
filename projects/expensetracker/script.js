@@ -9,18 +9,23 @@ window.onload = function() {
     let formFilter = document.getElementById("form-filter");
 
     formAdd.addEventListener("submit", (e) => {
-        let expenseObj = createObjFromFormEntries(e);
+        let expenseObj = createObjFromFormEntries(e); // todo
         app.addExpense(expenseObj);
+
+        app.showExpenses("", {});
+
+        app.updateSummaryCurrency(expenseObj.currency);
+        app.showSummary(expenseObj.currency);
     });
     formSearch.addEventListener("submit", (e) => { 
         let searchStr = getSearchStr(e);
-        let filterObj = createObjFromFormEntries();
-        app.filterExpenses(searchStr, filterObj);
+        let filterObj = createFilterObj(); // todo
+        app.showExpenses(searchStr, filterObj);
      });
     formFilter.addEventListener("submit", (e) => { 
         let filterObj = createObjFromFormEntries(e);
         let searchStr = document.getElementById("search-str").value;
-        app.filterExpenses(searchStr, filterObj);
+        app.showExpenses(searchStr, filterObj);
      });
 
     let buttonSearchClear = document.getElementById("button-search-clear");
@@ -29,24 +34,35 @@ window.onload = function() {
     buttonSearchClear.addEventListener("click", (e) => {
         e.preventDefault();
         app.clearSearchStr();
-        let filterObj = createObjFromFormEntries();
-        app.filterExpenses("", filterObj);
+        let filterObj = createFilterObj();
+        app.showExpenses("", filterObj);
     });
 
-    buttonFilterClear.addEventListener("click", () => {
+    buttonFilterClear.addEventListener("click", (e) => {
+        e.preventDefault();
         app.clearFilters();
         let searchStr = document.getElementById("search-str").value;
-        app.filterExpenses(searchStr, {});
+        app.showExpenses(searchStr, {});
     });
 
     let formView = document.getElementById("form-view"); 
     formView.addEventListener("click", (e) => {
         e.preventDefault();
         if (e.target.classList.contains("button-remove")) {
+            
+            let index = e.target.id;
+            let currency = app.expenses[(parseInt(index))].currency;
             app.removeExpense(e.target);
+            
+            let searchStr = document.getElementById("search-str").value;
+            let filterObj = createFilterObj();
+
+            app.showExpenses(searchStr, filterObj);
+
+            app.updateSummaryCurrency(currency);
+            app.showSummary(currency);
         }
     })
-
 
     let summaryCurrency = document.getElementById("summary-currency");
     summaryCurrency.addEventListener("change", (e) => {
@@ -55,22 +71,19 @@ window.onload = function() {
     });
 
     function createObjFromFormEntries(e) {
-        
-        let data;
-        if (e instanceof Event) {
-            e.preventDefault();
-            data = new FormData(e.target);
-        } else {
-            data = new FormData(document.getElementById("form-filter"));
-        }
+        e.preventDefault();
+        let data = new FormData(e.target);
+        return Object.fromEntries(data.entries());
+    }
 
+    function createFilterObj() {
+        let data = new FormData(document.getElementById("form-filter"));
         return Object.fromEntries(data.entries());
     }
 
     function getSearchStr(e) {
         e.preventDefault();
         const data = new FormData(e.target);
-
         return data.get('search-str');
     }
 
@@ -87,17 +100,14 @@ var App = function() {
     this.categories = [ "Housing", "Groceries", "Dining Out", "Personal Care", "Transportation", "Health Care", 
         "Entertainment", "Child Care", "Pet Care", "Miscellaneous" ];
     
-        this.expenses = [];
+    this.expenses = [];
     
     this.init = function() {
-        this.setMaxDate();
+        this.setDateRange();
     }
 
-    this.setMaxDate = function() {
-        let dateElementAdd = document.getElementById("date");
-        let dateElementFilterFrom = document.getElementById("filter-date-from");
-        let dateElementFilterTo = document.getElementById("filter-date-to");
-
+    this.setDateRange = function() {
+        
         let date = new Date();
         let y = date.getFullYear();
         let yTwoYearsAgo = date.getFullYear() - 2;
@@ -111,45 +121,36 @@ var App = function() {
         let minDate = yTwoYearsAgo + '-' + m + '-' + d;
         let maxDate = y + '-' + m + '-' + d;
 
-        dateElementAdd.setAttribute("min", minDate);
-        dateElementFilterFrom.setAttribute("min", minDate);
-        dateElementFilterTo.setAttribute("min", minDate);
+        document.getElementById("date").setAttribute("min", minDate);
+        document.getElementById("date").setAttribute("max", maxDate);
 
-        dateElementAdd.setAttribute("max", maxDate);
-        dateElementFilterFrom.setAttribute("max", maxDate);
-        dateElementFilterTo.setAttribute("max", maxDate);
+        document.getElementById("filter-date-from").setAttribute("min", minDate);
+        document.getElementById("filter-date-from").setAttribute("max", maxDate);
+
+        document.getElementById("filter-date-to").setAttribute("min", minDate);
+        document.getElementById("filter-date-to").setAttribute("max", maxDate);
     }
 
     this.addExpense = function (expenseObj) {
         expenseObj.totalPrice = +((parseFloat(expenseObj.price)*parseFloat(expenseObj.amount)).toFixed(2));
         this.expenses.push(expenseObj);
 
-        this.resetForm(document.getElementById("form-add"));
-        let amount = document.getElementById("amount");
-        amount.value = 1;
+        this.clearAddForm();
         this.resetForm(document.getElementById("form-search"));
         this.resetForm(document.getElementById("form-filter"));
-        this.showExpenses("", {});
-
-        this.updateSummaryCurrency(expenseObj.currency);
-        this.showSummary(expenseObj.currency);
     }
 
-    this.searchExpenses = function(searchStr) {
-        this.showExpenses(searchStr, {});
+    this.clearAddForm = function() {
+        this.resetForm(document.getElementById("form-add"));
+        document.getElementById("amount").value = 1;
     }
 
     this.clearSearchStr = function () {
         this.resetForm(document.getElementById("form-search"));
     }
 
-    this.filterExpenses = function (searchStr, filterObj) {
-        this.showExpenses(searchStr, filterObj);
-    }
-
     this.clearFilters = function () {
         this.resetForm(document.getElementById("form-filter"));
-        
     }
 
     this.clearView = function() {
@@ -165,24 +166,7 @@ var App = function() {
     this.removeExpense = function (removeButton) {
 
         let index = removeButton.id;
-        let currency = this.expenses[(parseInt(index))].currency;
-        console.log(currency);
         delete this.expenses[(parseInt(index))];
-
-        console.log(currency);
-        let searchForm = document.getElementById("form-search");
-        let searchData = new FormData(searchForm);
-        let searchStr = searchData.get('search-str');
-
-        let filterForm = document.getElementById("form-filter");
-        const filterData = new FormData(filterForm);
-        let filterObj = Object.fromEntries(filterData.entries());
-
-        this.showExpenses(searchStr, filterObj);
-
-        this.updateSummaryCurrency(currency);
-        this.showSummary(currency);
-
     }
 
     this.showExpenses = function (searchStr, filterObj) {
@@ -196,8 +180,8 @@ var App = function() {
                 let expense = this.expenses[i];
 
                 if (this.containsSearchStr(expense, searchStr)) {
-                    if (this.isEmpty(filterObj) || this.filtersMatch(expense, filterObj)) {
-                        this.showExpense(this.expenses[i], i);
+                    if (this.hasNoProperties(filterObj) || this.filtersMatch(expense, filterObj)) {
+                        this.showExpenseRow(this.expenses[i], i);
                         totalCurrencies[expense.currency] += parseFloat(this.expenses[i].totalPrice);
                         totalCurrencies[expense.currency] = +(totalCurrencies[expense.currency].toFixed(2));
                     }
@@ -214,7 +198,7 @@ var App = function() {
         } else return false;
     }
 
-    this.isEmpty = function(filterObj) {
+    this.hasNoProperties = function(filterObj) {
         if (Object.keys(filterObj).length === 0) {
             return true;
         } else return false;
@@ -327,7 +311,7 @@ var App = function() {
         view.appendChild(emptyCell);
     }
 
-    this.showExpense = function(expense, index) {
+    this.showExpenseRow = function(expense, index) {
 
         let view = document.getElementById("form-view");
 
@@ -385,6 +369,74 @@ var App = function() {
         view.appendChild(removeButtonWrapper);
     }
 
+    this.showSummary = function(currency) {
+
+        this.clearSummary();
+
+        let totalByCategory = this.calculateTotalByCategory(currency);
+        let sum = this.calculateSum(totalByCategory);
+
+        let summary = document.getElementById("div-summary");
+        
+        this.addCategoryRow(currency, "undefined", totalByCategory, sum);
+
+        for (let index in this.categories) {
+            let category = this.categories[index];
+            
+            this.addCategoryRow(currency, category, totalByCategory, sum);
+        }
+    }
+
+    this.addCategoryRow = function (currency, category, totalByCategory, sum) {
+        let categoryElement = document.createElement("p");
+        if (category === "undefined") {
+            categoryElement.textContent = "";
+        } else categoryElement.textContent = category;
+
+        let expensesElement = document.createElement("p");
+        expensesElement.textContent = currency + " " + totalByCategory[category];
+        expensesElement.setAttribute("class", "number");
+
+        let percentageElement = document.createElement("p");
+        if (sum !== 0) {
+            percentageElement.textContent = (+((totalByCategory[category] * 100 / sum).toFixed(2))) + "%";
+        } else percentageElement.textContent = "0%";
+        percentageElement.setAttribute("class", "number");
+
+        let summary = document.getElementById("div-summary");
+        summary.appendChild(categoryElement);
+        summary.appendChild(expensesElement);
+        summary.appendChild(percentageElement);
+    }
+
+    this.calculateTotalByCategory = function (currency) {
+        let totalByCategory = {};
+        for (let index in this.categories) {
+            totalByCategory[this.categories[index]] = 0;
+        }
+        totalByCategory.undefined = 0;
+
+        for (let i = 0; i < this.expenses.length; i++) {
+            if (!this.isEmpty(this.expenses[i])) {
+                let expense = this.expenses[i];
+                if (expense.currency === currency) {
+                    totalByCategory[expense.category] += expense.totalPrice;
+                    totalByCategory[expense.category] = +(totalByCategory[expense.category].toFixed(2));
+                }
+            }
+        }
+        return totalByCategory;
+    }
+
+    this.calculateSum = function (totalByCategory) {
+        let sum = 0;
+        for (let index in totalByCategory) {
+            sum += +(totalByCategory[index].toFixed(2));
+        }
+        sum = +(sum.toFixed(2));
+        return sum;
+    }
+    
     this.clearSummary = function () {
         let summary = document.getElementById("div-summary");
         let length = summary.children.length;
@@ -392,71 +444,6 @@ var App = function() {
         // to index 8 because of table captions 
         for (let i = length - 1; i > 2; i--) {
             summary.removeChild(summary.children[i]);
-        }
-    }
-
-    this.showSummary = function(currency) {
-
-        let totalByCategory = {};
-        for (let index in this.categories) {
-            totalByCategory[this.categories[index]] = 0;
-        }
-        totalByCategory.undefined = 0;
-
-        for (let i=0; i < this.expenses.length; i++) {
-            if (!this.isEmpty(this.expenses[i])) {
-                let expense = this.expenses[i];
-                if (expense.currency === currency) {                
-                    totalByCategory[expense.category] += expense.totalPrice;
-                    totalByCategory[expense.category] = +(totalByCategory[expense.category].toFixed(2));
-                }
-            }
-        }
-
-        this.clearSummary();
-
-
-        let sum = 0;
-        for (let index in totalByCategory) {
-            sum += +(totalByCategory[index].toFixed(2));
-        }
-        sum = +(sum.toFixed(2));
-
-        let summary = document.getElementById("div-summary");
-        
-        let noCategoryElement = document.createElement("p");
-        let noCategoryExpensesElement = document.createElement("p");
-        noCategoryExpensesElement.textContent = currency + " " + totalByCategory["undefined"];
-        noCategoryExpensesElement.setAttribute("class", "number");
-        let noCategoryPercentageElement = document.createElement("p");
-        if (sum !== 0) {
-            noCategoryPercentageElement.textContent = (+((totalByCategory["undefined"] * 100 / sum).toFixed(2))) + "%";
-        } else noCategoryPercentageElement.textContent = "0%";
-        noCategoryPercentageElement.setAttribute("class", "number");
-
-        summary.appendChild(noCategoryElement);
-        summary.appendChild(noCategoryExpensesElement);
-        summary.appendChild(noCategoryPercentageElement);
-
-        for (let index in this.categories) {
-            let category = this.categories[index];
-            
-            let categoryElement = document.createElement("p");
-            categoryElement.textContent = category;
-            
-            let expensesElement = document.createElement("p");
-            expensesElement.textContent = currency + " " + totalByCategory[category];
-            expensesElement.setAttribute("class", "number");
-
-            let percentageElement = document.createElement("p");
-            if (sum !== 0) {
-                percentageElement.textContent = (+((totalByCategory[category] * 100 / sum).toFixed(2))) + "%";
-            } else percentageElement.textContent = "0%" ;
-            percentageElement.setAttribute("class", "number");
-
-            summary.appendChild(categoryElement);
-            summary.appendChild(expensesElement);
-            summary.appendChild(percentageElement);
         }
     }
     
@@ -470,7 +457,6 @@ var App = function() {
                 option.removeAttribute("selected");
             } else option.setAttribute("selected", "selected");
         }
-
     }
 
     this.resetForm = function(form) {
@@ -478,7 +464,6 @@ var App = function() {
         let inputs = form.getElementsByTagName("input");
         for (let i = 0; i < inputs.length; i++) {
             switch (inputs[i].type) {
-                // case 'hidden':
                 case "text":
                 case "number":
                 case "date": 
