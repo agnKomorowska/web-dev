@@ -80,11 +80,11 @@
     <section id="filter-section">
         <div id="div-filter-box" class="box narrow">
             <form id="form-filter">
-                <label for="priceFrom">Filter by Price from: </label>
+                <label for="filter-price-from">Filter by Price from: </label>
                 <input type="number" name="priceFrom" id="filter-price-from" min="0" max="100000000" step="0.01">
-                <label for="priceTo">Price to: </label>
+                <label for="filter-price-to">Price to: </label>
                 <input type="number" name="priceTo" id="filter-price-to" min="0" max="100000000" step="0.01">
-                <label for="method">Payment Method: </label>
+                <label for="filter-method">Payment Method: </label>
                 <select name="method" id="filter-method">
                     <option value="" selected>select</option>
                     <option value="Cash">Cash</option>
@@ -92,7 +92,7 @@
                     <option value="Credit Card">Credit card</option>
                     <option value="Bank transfer">Bank transfer</option>
                 </select>
-                <label for="currency">Currency: </label>
+                <label for="filter-currency">Currency: </label>
                 <select name="currency" id="filter-currency">
                     <option value="" selected>select</option>
                     <option value="PLN">PLN</option>
@@ -100,9 +100,9 @@
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
                 </select>
-                <label for="amount">Amount: </label>
+                <label for="filter-amount">Amount: </label>
                 <input type="number" name="amount" min="1" max="100000000" id="filter-amount">
-                <label for="category">Category: </label>
+                <label for="filter-category">Category: </label>
                 <select name="category" id="filter-category">
                     <option value="" selected>select</option>
                     <option value="Housing">Housing</option>
@@ -116,9 +116,9 @@
                     <option value="Pet Care">Pet Care</option>
                     <option value="Miscellaneous">Miscellaneous</option>
                 </select>
-                <label for="dateFrom">Date from: </label>
+                <label for="filter-date-from">Date from: </label>
                 <input type="date" name="dateFrom" id="filter-date-from">
-                <label for="dateTo">Date to: </label>
+                <label for="filter-date-to">Date to: </label>
                 <input type="date" name="dateTo" id="filter-date-to">
                 <div class="button-wrapper button-wrapper-filter">
                     <button id="button-filter-clear">Clear</button>
@@ -138,7 +138,7 @@
                     <p class="caption p-category"><b>Category</b></p>
                     <p class="caption p-date"><b>Date</b></p>
                     <p class="caption p-notes"><b>Notes</b></p>
-                    <p class="caption number p-price"><b>Price</b></p>
+                    <p class="caption number p-price"><b>Price Each</b></p>
                     <p class="caption number p-amount"><b>Amount</b></p>
                     <p class="caption number p-total-price"><b>Total Price</b></p>
                     <div></div>
@@ -152,7 +152,7 @@
         <h3>Summary</h3>
         <div id="div-summary-box" class="box wide">
             <form id="form-summary">
-                <label for="currency">Currency: </label>
+                <label for="summary-currency">Currency: </label>
                 <select type="submit" name="currency" id="summary-currency">
                     <option value="" selected disabled>select</option>
                     <option value="PLN">PLN</option>

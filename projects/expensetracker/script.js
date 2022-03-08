@@ -14,7 +14,8 @@ window.onload = function() {
     });
     formSearch.addEventListener("submit", (e) => { 
         let searchStr = getSearchStr(e);
-        app.searchExpenses(searchStr);
+        let filterObj = createObjFromFormEntries();
+        app.filterExpenses(searchStr, filterObj);
      });
     formFilter.addEventListener("submit", (e) => { 
         let filterObj = createObjFromFormEntries(e);
@@ -25,12 +26,17 @@ window.onload = function() {
     let buttonSearchClear = document.getElementById("button-search-clear");
     let buttonFilterClear = document.getElementById("button-filter-clear");
     
-    buttonSearchClear.addEventListener("click", () => {
+    buttonSearchClear.addEventListener("click", (e) => {
+        e.preventDefault();
         app.clearSearchStr();
+        let filterObj = createObjFromFormEntries();
+        app.filterExpenses("", filterObj);
     });
 
     buttonFilterClear.addEventListener("click", () => {
         app.clearFilters();
+        let searchStr = document.getElementById("search-str").value;
+        app.filterExpenses(searchStr, {});
     });
 
     let formView = document.getElementById("form-view"); 
@@ -42,15 +48,21 @@ window.onload = function() {
     })
 
 
-    let summaryCurrency = document.getElementById("summary-currency");;
+    let summaryCurrency = document.getElementById("summary-currency");
     summaryCurrency.addEventListener("change", (e) => {
         let currency = getSummaryCurrency(e);
         app.showSummary(currency);
     });
 
     function createObjFromFormEntries(e) {
-        e.preventDefault();
-        const data = new FormData(e.target);
+        
+        let data;
+        if (e instanceof Event) {
+            e.preventDefault();
+            data = new FormData(e.target);
+        } else {
+            data = new FormData(document.getElementById("form-filter"));
+        }
 
         return Object.fromEntries(data.entries());
     }
@@ -119,6 +131,7 @@ var App = function() {
         this.resetForm(document.getElementById("form-filter"));
         this.showExpenses("", {});
 
+        this.updateSummaryCurrency(expenseObj.currency);
         this.showSummary(expenseObj.currency);
     }
 
@@ -128,7 +141,6 @@ var App = function() {
 
     this.clearSearchStr = function () {
         this.resetForm(document.getElementById("form-search"));
-        this.showExpenses("", {});
     }
 
     this.filterExpenses = function (searchStr, filterObj) {
@@ -137,7 +149,7 @@ var App = function() {
 
     this.clearFilters = function () {
         this.resetForm(document.getElementById("form-filter"));
-        this.showExpenses("", {});
+        
     }
 
     this.clearView = function() {
@@ -168,7 +180,9 @@ var App = function() {
 
         this.showExpenses(searchStr, filterObj);
 
+        this.updateSummaryCurrency(currency);
         this.showSummary(currency);
+
     }
 
     this.showExpenses = function (searchStr, filterObj) {
@@ -220,13 +234,13 @@ var App = function() {
                         break;
                     }
                     case "priceFrom": {
-                        if (!this.isPriceHigherThanOrEqual(expense["price"], filterObj[key])) {
+                        if (!this.isPriceHigherThanOrEqual(expense["totalPrice"], filterObj[key])) {
                             return false;
                         }
                         break;
                     }
                     case "priceTo": {
-                        if (!this.isPriceLowerThanOrEqual(expense["price"], filterObj[key])) {
+                        if (!this.isPriceLowerThanOrEqual(expense["totalPrice"], filterObj[key])) {
                             return false;
                         }
                         break;
@@ -444,10 +458,21 @@ var App = function() {
             summary.appendChild(expensesElement);
             summary.appendChild(percentageElement);
         }
-
-
-    }    
+    }
     
+    this.updateSummaryCurrency = function(currency) {
+        let summaryCurrency = document.getElementById("summary-currency");
+        let length = summaryCurrency.children.length;
+
+        for (let i = 0; i < length; i++) {
+            let option = summaryCurrency.children[i];
+            if (option.value !== currency) {
+                option.removeAttribute("selected");
+            } else option.setAttribute("selected", "selected");
+        }
+
+    }
+
     this.resetForm = function(form) {
         // clearing inputs
         let inputs = form.getElementsByTagName("input");
