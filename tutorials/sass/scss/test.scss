@@ -1,0 +1,191 @@
+$basic-color: cadetblue;
+
+.comment {
+    padding: 6px;
+    margin: 2px;
+
+    header {
+        font-size: 0.9rem;
+    }
+
+    footer {
+        color: black;
+        .button {
+            background-color: silver;
+            color: black;
+
+        };
+    }
+
+    .message {
+        color: black;
+    }
+
+    .mobile & {
+        font-size: 1.1rem;
+    }
+
+    .message > p { /* child selector */
+        font-size: 1.1rem;
+        span {
+            font-style: italic;
+        }
+    }
+}
+
+div + p { /* sibling selector */
+    font-size: 0.9rem;
+    color: blue;
+    span {
+        color: green;
+    }
+}
+
+div ~ p {
+    font-size: 0.6rem;
+    strong {
+        text-decoration: underline;
+    }
+}
+
+a {
+    &.nav-item {
+        color: red;
+    }
+}
+
+a {
+    &:hover {
+        text-decoration: underline;
+    }
+    &:first-child {
+        text-transform: capitalize;
+    }
+    &[href^="mailto"] {
+        color: blue;
+    }
+}
+
+.container {
+    padding: 5px;
+    &-header {
+        color: black;
+        font-size: 1.2rem;
+    }
+    &-content {
+        color: blue;
+    }
+    &-footer {
+        border-top: 2px solid black;
+    }
+}
+
+.basic {
+    background-color: $basic-color;
+}
+
+.grayscale {
+    background-color: grayscale($basic-color);
+}
+
+.desaturate {
+    background-color: desaturate($basic-color, $amount: 10%);
+}
+
+.saturate {
+    background-color: saturate($basic-color, $amount: 10%);
+}
+
+.lighten {
+    background-color: lighten($basic-color, $amount: 10%);
+}
+
+.darken {
+    background-color: darken($basic-color, $amount: 10%);
+}
+
+.mix {
+    background-color: mix($basic-color, green);
+}
+
+@mixin round-corners($radius: 5px) {
+    -mox-border-radius: $radius;
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+
+div.round-corners-default {
+    background-color: silver;
+    margin: 5px;
+    @include round-corners;
+}
+
+div.round-corners-7px {
+    margin: 5px;
+    background-color: silver;
+    @include round-corners(7px);
+}
+
+@mixin link {
+    font-style: italic;
+    &:hover {
+        text-decoration: underline;
+        color:yellowgreen;
+    }
+}
+
+a {
+    color: blue;
+    @include link;
+}
+
+a.nav-item {
+    color: green;
+    font-weight: bold;
+    @include link;
+}
+
+.alert {
+    border: 1px solid;
+    border-color: black;
+    color: black;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.alert-success {
+    @extend .alert;
+    border-color: green;
+    color: green;
+}
+
+.alert-danger {
+    @extend .alert;
+    border-color: red;
+    color: red;
+}
+
+@for$i from 1 through 6 {
+    h#{$i} {
+        font-size: 0.3rem + 2rem / $i;
+        @if ($i == 1) {
+            color: red;
+        }
+    }
+}
+
+$i: 6;
+@while ($i > 0) {
+    .Display-#{$i} {
+        font-size: 0.2rem + ($i * 0.3rem);        
+    }
+    $i: $i - 1;
+}
+
+$icons: (danger: red, success: green, warning: yellow, info: blue);
+
+@each $name, $color in $icons {
+    .icon-#{$name} {
+        color: $color;
+    }
+}

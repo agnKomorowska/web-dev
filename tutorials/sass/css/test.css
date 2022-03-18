@@ -1,0 +1,167 @@
+.comment {
+  padding: 6px;
+  margin: 2px; }
+  .comment header {
+    font-size: 0.9rem; }
+  .comment footer {
+    color: black; }
+    .comment footer .button {
+      background-color: silver;
+      color: black; }
+  .comment .message {
+    color: black; }
+  .mobile .comment {
+    font-size: 1.1rem; }
+  .comment .message > p {
+    /* child selector */
+    font-size: 1.1rem; }
+    .comment .message > p span {
+      font-style: italic; }
+
+div + p {
+  /* sibling selector */
+  font-size: 0.9rem;
+  color: blue; }
+  div + p span {
+    color: green; }
+
+div ~ p {
+  font-size: 0.6rem; }
+  div ~ p strong {
+    text-decoration: underline; }
+
+a.nav-item {
+  color: red; }
+
+a:hover {
+  text-decoration: underline; }
+
+a:first-child {
+  text-transform: capitalize; }
+
+a[href^="mailto"] {
+  color: blue; }
+
+.container {
+  padding: 5px; }
+  .container-header {
+    color: black;
+    font-size: 1.2rem; }
+  .container-content {
+    color: blue; }
+  .container-footer {
+    border-top: 2px solid black; }
+
+.basic {
+  background-color: cadetblue; }
+
+.grayscale {
+  background-color: gray; }
+
+.desaturate {
+  background-color: #6c9293; }
+
+.saturate {
+  background-color: #52aaad; }
+
+.lighten {
+  background-color: #7fb1b3; }
+
+.darken {
+  background-color: #4c7e80; }
+
+.mix {
+  background-color: #308f50; }
+
+div.round-corners-default {
+  background-color: silver;
+  margin: 5px;
+  -mox-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; }
+
+div.round-corners-7px {
+  margin: 5px;
+  background-color: silver;
+  -mox-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px; }
+
+a {
+  color: blue;
+  font-style: italic; }
+  a:hover {
+    text-decoration: underline;
+    color: yellowgreen; }
+
+a.nav-item {
+  color: green;
+  font-weight: bold;
+  font-style: italic; }
+  a.nav-item:hover {
+    text-decoration: underline;
+    color: yellowgreen; }
+
+.alert, .alert-success, .alert-danger {
+  border: 1px solid;
+  border-color: black;
+  color: black;
+  margin: 0.5rem;
+  padding: 0.5rem; }
+
+.alert-success {
+  border-color: green;
+  color: green; }
+
+.alert-danger {
+  border-color: red;
+  color: red; }
+
+h1 {
+  font-size: 2.3rem;
+  color: red; }
+
+h2 {
+  font-size: 1.3rem; }
+
+h3 {
+  font-size: 0.96667rem; }
+
+h4 {
+  font-size: 0.8rem; }
+
+h5 {
+  font-size: 0.7rem; }
+
+h6 {
+  font-size: 0.63333rem; }
+
+.Display-6 {
+  font-size: 2rem; }
+
+.Display-5 {
+  font-size: 1.7rem; }
+
+.Display-4 {
+  font-size: 1.4rem; }
+
+.Display-3 {
+  font-size: 1.1rem; }
+
+.Display-2 {
+  font-size: 0.8rem; }
+
+.Display-1 {
+  font-size: 0.5rem; }
+
+.icon-danger {
+  color: red; }
+
+.icon-success {
+  color: green; }
+
+.icon-warning {
+  color: yellow; }
+
+.icon-info {
+  color: blue; }

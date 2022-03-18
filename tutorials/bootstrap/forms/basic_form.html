@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container m-3">
+        <form action="">
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" placeholder="Insert email" class="form-control" id="inputEmail">
+                <div id="emailInfo" class="form-text">We don't share your data</div>
+            </div>
+        </form>
+        <div class="mb-3">
+            <label for="inputPassword" class="form-label">Password</label>
+            <input type="password" name="password" placeholder="Insert password" class="form-control" id="inputPassword">
+        </div>
+        <div class="form-check mb-3">
+            <input type="text" class="form-check-input" id="inputTermsOfService" name="termsOfServiceAgreement">
+            <label for="inputTermsOfService" class="form-check-labet">I accept the <a href="#">Terms of Service.</a></label>
+        </div>
+        <button class="btn btn-primary">Send</button>
+    </div>
+    <hr>
+    <div class="container m-3">
+        <form action="">
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" placeholder="Insert email" class="form-control form-control-sm" id="inputEmail">
+                <div id="emailInfo" class="form-text">We don't share your data</div>
+            </div>
+        </form>
+        <div class="mb-3">
+            <label for="inputPassword" class="form-label">Password</label>
+            <input type="password" name="password" placeholder="Insert password" class="form-control form-control-lg" id="inputPassword">
+        </div>
+        <div class="form-check mb-3">
+            <input type="text" class="form-check-input" id="inputTermsOfService" name="termsOfServiceAgreement">
+            <label for="inputTermsOfService" class="form-check-labet">I accept the <a href="#">Terms of Service.</a></label>
+        </div>
+        <div class="mb-3">
+            <label for="inputColor" class="form-label">Color Picker</label>
+            <input type="color" id="inputColor" value="#FF0000" title="Select Color" class="form-control form-control-color">
+        </div>
+        <div class="mb-3">
+            <select name="country" multiple size="3" id="inputCountry" class="form-select form-select-sm">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="PL">PL</option>
+                <option value="FR">FR</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="country" multiple size="3" id="inputCountry" class="form-select form-select-lg">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="PL">PL</option>
+                <option value="FR">FR</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <div class="form-check">
+                <input type="radio" id="inputRadio1" name="radioOption" class="form-check-input">
+                <label for="radio1" class="form-check-label">Radio 1</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="inputRadio2" name="radioOption" class="form-check-input">
+                <label for="radio2" class="form-check-label">Radio 2</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="inputRadio3" name="radioOption" class="form-check-input">
+                <label for="radio3" class="form-check-label">Radio 3</label>
+            </div>
+        </div>
+        <div class="mb-3 form-switch">
+            <input type="checkbox" class="form-check-input" id="flexSwitch1">
+            <label for="flexSwitch1" class="form-check-laber">Switch 1</label>
+        </div>
+        <div class="mb-3">
+            <div class="form-check form-check-inline">
+                <input type="radio" id="inputRadio1" name="radioOption2" class="form-check-input">
+                <label for="radio1" class="form-check-label">Radio 1</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" checked id="inputRadio2" name="radioOption2" class="form-check-input">
+                <label for="radio2" class="form-check-label">Radio 2</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" disabled id="inputRadio3" name="radioOption2" class="form-check-input">
+                <label for="radio3" class="form-check-label">Radio 3</label>
+            </div>
+        </div>
+        <div class="btn-group mb-3">
+            <input type="radio" name="radioBtn1" class="btn-check" id="radioBtn1">
+            <label for="radioBtn1" class="btn btn-outline-success">Radio 1</label>
+            <input type="radio" name="radioBtn1" class="btn-check" id="radioBtn2">
+            <label for="radioBtn2" class="btn btn-primary">Radio 2</label>
+            <input type="radio" name="radioBtn1" class="btn-check" id="radioBtn3">
+            <label for="radioBtn3" class="btn btn-outline-danger">Radio 3</label>
+        </div>
+        <div class="form-file form-file-lg mb-3">
+            <label for="fileInput" class="form-file-label">Select file</label>
+            <input type="file" class="form-control" id="fileInput">
+        </div>
+        <div class="mb-3">
+            <label for="range1" class="form-label">Range</label>
+            <input type="range" min="0" max="100" id="range1" value="50" class="form-range">
+        </div>
+        <button class="btn btn-primary">Send</button>
+    </div>
+    <hr>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+</html>
